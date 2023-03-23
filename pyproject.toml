@@ -1,0 +1,79 @@
+[tool.poetry]
+name = "docker-django-template"
+version = "2.2.0"
+description = "Template repository for a Docker+Django project"
+authors = ["Ronie Martinez <ronmarti18@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+daphne = "^4.0.0"
+Django = "^4.1.7"
+django-allauth = "^0.53.1"
+psycopg2-binary = "^2.9.5"
+
+[tool.poetry.group.dev.dependencies]
+autoflake = "^2.0"
+black = "^23.1"
+coverage = { extras = ["toml"], version = "^7.2" }
+diagrams = "^0.23.3"
+isort = "^5.12.0"
+mypy = "^1.1"
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+pytest-django = "^4.5.2"
+pyproject-flake8 = "^6.0.0"
+
+[tool.isort]
+line_length = 120
+multi_line_output = 3
+force_grid_wrap = 0
+use_parentheses = true
+include_trailing_comma = true
+ensure_newline_before_comments = true
+atomic = true
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = """
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/foo.py
+"""
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "project.settings"
+addopts = """\
+    -vv \
+    -x \
+    --cov=sample \
+    --cov-report=term-missing \
+    --cov-report=html \
+    """
+django_debug_mode = true
+
+[tool.coverage.run]
+source = ["sample"]
+omit = ["*/test*", "*/apps.py", "*/migrations/*"]
+
+[tool.mypy]
+disallow_untyped_defs = true
+exclude = "sample/migrations"
+
+[[tool.mypy.overrides]]
+module = [
+    "allauth.*",
+    "diagrams.*",
+    "django.*",
+    "psycopg2.*",
+]
+ignore_missing_imports = true
+
+[tool.flake8]
+max-line-length = 120
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
