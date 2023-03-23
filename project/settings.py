@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "tailwind",
+    "combio",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.sites",  # required by django-allauth
@@ -65,6 +67,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "project.urls"
+
+TAILWIND_APP_NAME = "combio"
 
 TEMPLATES = [
     {
@@ -125,6 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
