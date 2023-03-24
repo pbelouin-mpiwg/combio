@@ -32,19 +32,19 @@
                   {% if request.user.is_authenticated %}
             <a
               href="/"
-              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4  {% if nbar == 'landing'%} text-white {% endif %}"
             >
               Home
             </a>
             <a
-              href="/protected"
-              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              href="/search"
+              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 {% if nbar == 'search'%} text-white {% endif %}"
             >
               Search
             </a>   
             <a
               href="/records"
-              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 {% if nbar == 'records'%} text-white {% endif %} "
             >
               Browse
             </a>   
