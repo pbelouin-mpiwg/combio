@@ -1,0 +1,22 @@
+{% extends "combio_app/base.html" %} {% load i18n %} {% block styles %} 
+{% endblock %} {% block container %} {% if records.exists %}
+<table class="w-full text-sm text-left text-gray-500">
+  <thead class="text-xs text-white uppercase bg-mpiwg-green">
+    <tr class="border-b dark:border-gray-700">
+      <th class="p-2">Collection</th>
+      <th class="p-2">Title</th>
+      <th class="p-2">Metadata</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for record in records %}
+    <tr class="bg-white border-b even:bg-gray-200">
+      <td class="p-2">{{record.collection}}</td>
+      <td class="p-2">{{record.title}}</td>
+      <td class="p-2">{{record.metadata}}</td> 
+    </tr>
+  {% endfor %} 
+  </tbody>
+</table>
+{% endif %} 
+{% endblock %}

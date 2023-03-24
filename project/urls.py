@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 import combio_app.views
+from combio_app.views.site_views import ShowRecords
 
 urlpatterns = [
     path("", include("combio_app.urls")),
@@ -26,6 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("records/", ShowRecords.as_view(), name="records"),
 ]
 
 if settings.DEBUG:
