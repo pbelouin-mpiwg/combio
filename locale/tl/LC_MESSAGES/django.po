@@ -27,94 +27,94 @@ msgstr "Ingles"
 msgid "Tagalog"
 msgstr "Tagalog"
 
-#: sample/forms.py:12
+#: combio_app/forms.py:12
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: sample/forms.py:24
+#: combio_app/forms.py:24
 msgid "Password"
 msgstr ""
 
-#: sample/forms.py:30
+#: combio_app/forms.py:30
 msgid "Password confirmation"
 msgstr ""
 
-#: sample/forms.py:33
+#: combio_app/forms.py:33
 msgid "Enter the same password as before, for verification."
 msgstr ""
 
-#: sample/forms.py:43
+#: combio_app/forms.py:43
 msgid "Email already exists!"
 msgstr ""
 
-#: sample/templates/account/account_inactive.html:8
+#: combio_app/templates/account/account_inactive.html:8
 msgid "Account Inactive"
 msgstr ""
 
-#: sample/templates/account/account_inactive.html:9
+#: combio_app/templates/account/account_inactive.html:9
 msgid "This account is inactive."
 msgstr ""
 
-#: sample/templates/account/email.html:16
+#: combio_app/templates/account/email.html:16
 msgid "E-mail Addresses"
 msgstr ""
 
-#: sample/templates/account/email.html:19
+#: combio_app/templates/account/email.html:19
 msgid "The following e-mail addresses are associated with your account:"
 msgstr ""
 
-#: sample/templates/account/email.html:36
+#: combio_app/templates/account/email.html:36
 msgid "Verified"
 msgstr ""
 
-#: sample/templates/account/email.html:38
+#: combio_app/templates/account/email.html:38
 msgid "Unverified"
 msgstr ""
 
-#: sample/templates/account/email.html:41
+#: combio_app/templates/account/email.html:41
 msgid "Primary"
 msgstr ""
 
-#: sample/templates/account/email.html:48
+#: combio_app/templates/account/email.html:48
 msgid "Make Primary"
 msgstr ""
 
-#: sample/templates/account/email.html:50
+#: combio_app/templates/account/email.html:50
 msgid "Re-send Verification"
 msgstr ""
 
-#: sample/templates/account/email.html:52
-#: sample/templates/socialaccount/connections.html:37
+#: combio_app/templates/account/email.html:52
+#: combio_app/templates/socialaccount/connections.html:37
 msgid "Remove"
 msgstr ""
 
-#: sample/templates/account/email.html:60
+#: combio_app/templates/account/email.html:60
 msgid "Warning:"
 msgstr ""
 
-#: sample/templates/account/email.html:60
+#: combio_app/templates/account/email.html:60
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
 "an e-mail address so you can receive notifications, reset your password, etc."
 msgstr ""
 
-#: sample/templates/account/email.html:67
+#: combio_app/templates/account/email.html:67
 msgid "Add E-mail Address"
 msgstr ""
 
-#: sample/templates/account/email.html:74
+#: combio_app/templates/account/email.html:74
 msgid "Add E-mail"
 msgstr ""
 
-#: sample/templates/account/email.html:87
+#: combio_app/templates/account/email.html:87
 msgid "Do you really want to remove the selected e-mail address?"
 msgstr ""
 
-#: sample/templates/account/email_confirm.html:10
+#: combio_app/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr ""
 
-#: sample/templates/account/email_confirm.html:16
+#: combio_app/templates/account/email_confirm.html:16
 #, python-format
 msgid ""
 "\n"
@@ -123,11 +123,11 @@ msgid ""
 "                        <b>%(user_display)s</b>."
 msgstr ""
 
-#: sample/templates/account/email_confirm.html:22
+#: combio_app/templates/account/email_confirm.html:22
 msgid "Confirm"
 msgstr ""
 
-#: sample/templates/account/email_confirm.html:29
+#: combio_app/templates/account/email_confirm.html:29
 #, python-format
 msgid ""
 "This e-mail confirmation link expired or is invalid. Please\n"
@@ -135,20 +135,20 @@ msgid ""
 "confirmation request</a>."
 msgstr ""
 
-#: sample/templates/account/login.html:7
-#: sample/templates/account/signup.html:16
-#: sample/templates/account/signup.html:29 sample/templates/sample/base.html:60
-#: sample/templates/socialaccount/signup.html:16
-#: sample/templates/socialaccount/signup.html:30
+#: combio_app/templates/account/login.html:7
+#: combio_app/templates/account/signup.html:16
+#: combio_app/templates/account/signup.html:29 combio_app/templates/combio_app/base.html:60
+#: combio_app/templates/socialaccount/signup.html:16
+#: combio_app/templates/socialaccount/signup.html:30
 msgid "Register"
 msgstr ""
 
-#: sample/templates/account/login.html:23
-#: sample/templates/account/login.html:56 sample/templates/sample/base.html:57
+#: combio_app/templates/account/login.html:23
+#: combio_app/templates/account/login.html:56 combio_app/templates/combio_app/base.html:57
 msgid "Login"
 msgstr ""
 
-#: sample/templates/account/login.html:28
+#: combio_app/templates/account/login.html:28
 #, python-format
 msgid ""
 "Please sign in with one\n"
@@ -157,71 +157,71 @@ msgid ""
 "                        for a %(site_name)s account and sign in below:"
 msgstr ""
 
-#: sample/templates/account/login.html:38
+#: combio_app/templates/account/login.html:38
 msgid "or"
 msgstr ""
 
-#: sample/templates/account/login.html:45
+#: combio_app/templates/account/login.html:45
 #, python-format
 msgid ""
 "If you have not created an account yet, then please\n"
 "                        <a href=\"%(signup_url)s\">sign up</a> first."
 msgstr ""
 
-#: sample/templates/account/login.html:59
-#: sample/templates/account/password_change.html:26
+#: combio_app/templates/account/login.html:59
+#: combio_app/templates/account/password_change.html:26
 msgid "Forgot Password?"
 msgstr ""
 
-#: sample/templates/account/logout.html:8
+#: combio_app/templates/account/logout.html:8
 msgid "Are you sure you want to logout?"
 msgstr ""
 
-#: sample/templates/account/logout.html:14 sample/templates/sample/base.html:53
+#: combio_app/templates/account/logout.html:14 combio_app/templates/combio_app/base.html:53
 msgid "Logout"
 msgstr ""
 
-#: sample/templates/account/password_change.html:16
-#: sample/templates/account/password_change.html:23
-#: sample/templates/account/password_reset_from_key.html:18
-#: sample/templates/account/password_reset_from_key.html:32
-#: sample/templates/account/password_reset_from_key_done.html:8
+#: combio_app/templates/account/password_change.html:16
+#: combio_app/templates/account/password_change.html:23
+#: combio_app/templates/account/password_reset_from_key.html:18
+#: combio_app/templates/account/password_reset_from_key.html:32
+#: combio_app/templates/account/password_reset_from_key_done.html:8
 msgid "Change Password"
 msgstr ""
 
-#: sample/templates/account/password_reset.html:16
-#: sample/templates/account/password_reset_done.html:8
+#: combio_app/templates/account/password_reset.html:16
+#: combio_app/templates/account/password_reset_done.html:8
 msgid "Password Reset"
 msgstr ""
 
-#: sample/templates/account/password_reset.html:22
+#: combio_app/templates/account/password_reset.html:22
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll send you "
 "an e-mail allowing you to reset it."
 msgstr ""
 
-#: sample/templates/account/password_reset.html:30
+#: combio_app/templates/account/password_reset.html:30
 msgid "Reset My Password"
 msgstr ""
 
-#: sample/templates/account/password_reset.html:34
+#: combio_app/templates/account/password_reset.html:34
 msgid ""
 "Please contact us if you have any trouble resetting your\n"
 "                    password."
 msgstr ""
 
-#: sample/templates/account/password_reset_done.html:13
+#: combio_app/templates/account/password_reset_done.html:13
 msgid ""
 "We have sent you an e-mail. Please contact us if you do not receive it "
 "within a few\n"
 "                    minutes."
 msgstr ""
 
-#: sample/templates/account/password_reset_from_key.html:17
+#: combio_app/templates/account/password_reset_from_key.html:17
 msgid "Bad Token"
 msgstr ""
 
-#: sample/templates/account/password_reset_from_key.html:22
+#: combio_app/templates/account/password_reset_from_key.html:22
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
@@ -230,37 +230,37 @@ msgid ""
 "\">new password reset</a>."
 msgstr ""
 
-#: sample/templates/account/password_reset_from_key.html:36
-#: sample/templates/account/password_reset_from_key_done.html:9
+#: combio_app/templates/account/password_reset_from_key.html:36
+#: combio_app/templates/account/password_reset_from_key_done.html:9
 msgid "Your password is now changed."
 msgstr ""
 
-#: sample/templates/account/password_set.html:16
-#: sample/templates/account/password_set.html:23
+#: combio_app/templates/account/password_set.html:16
+#: combio_app/templates/account/password_set.html:23
 msgid "Set Password"
 msgstr ""
 
-#: sample/templates/account/signup.html:18
+#: combio_app/templates/account/signup.html:18
 #, python-format
 msgid ""
 "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>\n"
 "                    ."
 msgstr ""
 
-#: sample/templates/account/signup_closed.html:8
+#: combio_app/templates/account/signup_closed.html:8
 msgid "Sign Up Closed"
 msgstr ""
 
-#: sample/templates/account/signup_closed.html:9
+#: combio_app/templates/account/signup_closed.html:9
 msgid "We are sorry, but the sign up is currently closed."
 msgstr ""
 
-#: sample/templates/account/verification_sent.html:8
-#: sample/templates/account/verified_email_required.html:8
+#: combio_app/templates/account/verification_sent.html:8
+#: combio_app/templates/account/verified_email_required.html:8
 msgid "Verify Your E-mail Address"
 msgstr ""
 
-#: sample/templates/account/verification_sent.html:9
+#: combio_app/templates/account/verification_sent.html:9
 msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
 "finalize\n"
@@ -269,7 +269,7 @@ msgid ""
 "                    minutes."
 msgstr ""
 
-#: sample/templates/account/verified_email_required.html:12
+#: combio_app/templates/account/verified_email_required.html:12
 msgid ""
 "This part of the site requires us to verify that\n"
 "                    you are who you claim to be. For this purpose, we "
@@ -277,7 +277,7 @@ msgid ""
 "                    verify ownership of your e-mail address. "
 msgstr ""
 
-#: sample/templates/account/verified_email_required.html:16
+#: combio_app/templates/account/verified_email_required.html:16
 msgid ""
 "We have sent an e-mail to you for\n"
 "                    verification. Please click on the link inside this e-"
@@ -285,58 +285,58 @@ msgid ""
 "                    contact us if you do not receive it within a few minutes."
 msgstr ""
 
-#: sample/templates/account/verified_email_required.html:20
+#: combio_app/templates/account/verified_email_required.html:20
 #, python-format
 msgid ""
 "<strong>Note:</strong> you can still\n"
 "                    <a href=\"%(email_url)s\">change your e-mail address</a>."
 msgstr ""
 
-#: sample/templates/openid/login.html:16
+#: combio_app/templates/openid/login.html:16
 msgid "OpenID Sign In"
 msgstr ""
 
-#: sample/templates/openid/login.html:23
+#: combio_app/templates/openid/login.html:23
 msgid "Sign In"
 msgstr ""
 
-#: sample/templates/sample/protected.html:9
+#: combio_app/templates/combio_app/protected.html:9
 msgid "You are logged in as"
 msgstr ""
 
-#: sample/templates/socialaccount/authentication_error.html:8
+#: combio_app/templates/socialaccount/authentication_error.html:8
 msgid "Social Network Login Failure"
 msgstr ""
 
-#: sample/templates/socialaccount/authentication_error.html:9
+#: combio_app/templates/socialaccount/authentication_error.html:9
 msgid ""
 "An error occurred while attempting to login via your social network account."
 msgstr ""
 
-#: sample/templates/socialaccount/connections.html:8
+#: combio_app/templates/socialaccount/connections.html:8
 msgid "Account Connections"
 msgstr ""
 
-#: sample/templates/socialaccount/connections.html:11
+#: combio_app/templates/socialaccount/connections.html:11
 msgid ""
 "You can sign in to your account using any of the following third party\n"
 "                        accounts:"
 msgstr ""
 
-#: sample/templates/socialaccount/connections.html:45
+#: combio_app/templates/socialaccount/connections.html:45
 msgid ""
 "You currently have no social network accounts connected to this account."
 msgstr ""
 
-#: sample/templates/socialaccount/connections.html:48
+#: combio_app/templates/socialaccount/connections.html:48
 msgid "Add a 3rd Party Account"
 msgstr ""
 
-#: sample/templates/socialaccount/login_cancelled.html:8
+#: combio_app/templates/socialaccount/login_cancelled.html:8
 msgid "Login Cancelled"
 msgstr ""
 
-#: sample/templates/socialaccount/login_cancelled.html:12
+#: combio_app/templates/socialaccount/login_cancelled.html:12
 #, python-format
 msgid ""
 "You decided to cancel logging in to our site using one of your existing "
@@ -345,7 +345,7 @@ msgid ""
 "\"%(login_url)s\">sign in</a>."
 msgstr ""
 
-#: sample/templates/socialaccount/signup.html:18
+#: combio_app/templates/socialaccount/signup.html:18
 #, python-format
 msgid ""
 "You are about to use\n"

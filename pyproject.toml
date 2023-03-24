@@ -12,6 +12,7 @@ Django = "^4.1.7"
 django-allauth = "^0.53.1"
 psycopg2-binary = "^2.9.5"
 django-tailwind = "^3.5.0"
+django-elasticsearch-dsl = "^7.3"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.0"
@@ -49,27 +50,22 @@ DJANGO_SETTINGS_MODULE = "project.settings"
 addopts = """\
     -vv \
     -x \
-    --cov=sample \
+    --cov=combio_app \
     --cov-report=term-missing \
     --cov-report=html \
     """
 django_debug_mode = true
 
 [tool.coverage.run]
-source = ["sample"]
+source = ["combio_app"]
 omit = ["*/test*", "*/apps.py", "*/migrations/*"]
 
 [tool.mypy]
 disallow_untyped_defs = true
-exclude = "sample/migrations"
+exclude = "combio_app/migrations"
 
 [[tool.mypy.overrides]]
-module = [
-    "allauth.*",
-    "diagrams.*",
-    "django.*",
-    "psycopg2.*",
-]
+module = ["allauth.*", "diagrams.*", "django.*", "psycopg2.*"]
 ignore_missing_imports = true
 
 [tool.flake8]

@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "tailwind",
     "combio",
+    "django_elasticsearch_dsl",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.sites",  # required by django-allauth
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "daphne",
     "django.contrib.staticfiles",
-    "sample",
+    "combio_app",
     # django-allauth
     "allauth",
     "allauth.account",
@@ -69,6 +70,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = "project.urls"
 
 TAILWIND_APP_NAME = "combio"
+
+ELASTICSEARCH_DSL = {
+    "default": {"hosts": "elastic:elastic@es:9200"},
+}
 
 TEMPLATES = [
     {
@@ -172,7 +177,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = f"docker-django-template <{EMAIL_HOST_USER}>"
 
 LOGIN_URL = reverse_lazy("account_login")
-LOGIN_REDIRECT_URL = reverse_lazy("sample:protected")
+LOGIN_REDIRECT_URL = reverse_lazy("combio_app:protected")
 
 # https://django-allauth.readthedocs.io/en/latest/installation.html
 
@@ -181,9 +186,9 @@ SITE_ID = int(os.getenv("SITE_ID", "1"))
 # https://docs.djangoproject.com/en/3.2/ref/settings/#migration-modules
 
 MIGRATION_MODULES = {
-    "account": "sample.migrations.allauth.account",
-    "socialaccount": "sample.migrations.allauth.socialaccount",
-    "sites": "sample.migrations.sites",
+    "account": "combio_app.migrations.allauth.account",
+    "socialaccount": "combio_app.migrations.allauth.socialaccount",
+    "sites": "combio_app.migrations.sites",
 }
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
@@ -194,7 +199,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy("account_login")
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
-ACCOUNT_FORMS = {"signup": "sample.forms.RegisterForm"}
+ACCOUNT_FORMS = {"signup": "combio_app.forms.RegisterForm"}
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
-ACCOUNT_USER_DISPLAY = "sample.utils.display_username"
+ACCOUNT_USER_DISPLAY = "combio_app.utils.display_username"

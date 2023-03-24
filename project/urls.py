@@ -18,10 +18,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-import sample.views
+import combio_app.views
 
 urlpatterns = [
-    path("", include("sample.urls")),
+    path("", include("combio_app.urls")),
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
@@ -33,7 +33,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-handler400 = sample.views.Handle400View.as_view()
-handler403 = sample.views.Handle403View.as_view()
-handler404 = sample.views.Handle404View.as_view()
-handler500 = sample.views.handle500_view
+handler400 = combio_app.views.Handle400View.as_view()
+handler403 = combio_app.views.Handle403View.as_view()
+handler404 = combio_app.views.Handle404View.as_view()
+handler500 = combio_app.views.handle500_view
