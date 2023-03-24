@@ -1,27 +1,103 @@
-{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} {% block container %}
+{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} 
+{% block container %}
+{% block style %}
+<style>
+em {
+    color: red;
+}
+</style>
+{% endblock %}
 <div class="grid grid-cols-12 w-full max-h-fit">
-  <div class="col-span-12 w-full pb-4">
-      <form method="get" action='/search/' id='search-form'>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-               <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
-              <input {% if q %} value="{{q}}" {% endif %}  name="q" type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green" placeholder="Search Oral History" required>
-              <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2">Search</button>
-          </div>
-      </form>
+  <div class="col-span-12 grid w-full p-4 bg-mpiwg-subdued-green">
+    <form method="get" action="/search/" id="search-form">
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5 text-gray-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+        <input
+          {% if q %}
+            value="{{q}}"
+          {% endif %}
+          name="q"
+          type="search"
+          id="default-search"
+          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
+          placeholder="Search Oral History"
+          required
+        />
+        <button
+          type="submit"
+          class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        >
+          Search
+        </button>
+      </div>
+    </form>
   </div>
-  <div class="col-span-3 p-4 w-full pt-6 bg-slate-400 max-h-fit h-screen">
-  {% for result in results %}
-    <tr class="bg-white border-b even:bg-gray-200">
-      <td class="p-2">{{result.collection}}</td>
-      <td class="p-2">{{result.title}}</td>
-      <td class="p-2">{{result.metadata}}</td> 
-    </tr>
-  {% endfor %} 
-  
-  
+  <div
+    class="col-span-3 font-sans p-4 w-full pt-6 bg-mpiwg-brown max-h-fit h-screen text-mpiwg-green"
+  >
+    {% for result in results %}
+    <div class="{% if current_result == result.id %} bg-white {% endif %} p-4">
+    <a href="/search?q={{q}}&result={{result.id}}">
+      <span class="p-2"
+        >{{result.collection.name}}</span
+      >
+      <span class="p-2">{{result.title}}</span>
+      </a>
+    </div>
+    {% endfor %}
   </div>
-  <div class="col-span-9 w-full bg-neutral-200 max-h-fit h-screen">test</div>
+  <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
+    {% for result in results %} 
+        {% if current_result == result.id %}
+        <div>
+          <span class="text-3xl text-mpiwg-green">{{result.title}}</span>
+        </div>
+        <div>
+          {% for field,value in result.metadata.combio.items %} 
+          <span class="text-lg text-mpiwg-green">{{ field }}</span>
+          {% endfor %}
+        </div>
+        <div>
+          {% for snippet in result.meta.highlight.transcript %}
+            <span class="text-lg">{{ snippet |safe }}</span>
+          {% endfor %}
+        </div>
+        {% endif %} 
+    {% endfor %}
+  </div>
 </div>
+<script>
+window.addEventListener("keydown", (e) => {
+      if (e.key == "ArrowLeft") {
+      }
+      if (
+        e.key == "ArrowRight") {
+        window.location.href = "{{ request.path }}";
+      }
+      if (e.key == "ArrowDown") {
+        window.location.href = "{{ request.path }}?q={{q}}&result={{current_result}}";
+      }
+      if (
+        e.key == "ArrowUp") {
+      }
+    });
+</script>
 {% endblock %}

@@ -4,6 +4,8 @@ from django.views.generic import TemplateView
 from elasticsearch_dsl.query import SimpleQueryString
 from django.core.paginator import Paginator
 from django.utils.functional import LazyObject
+from pprint import pprint
+
 
 from django.views import View
 from ..models import Record
@@ -78,9 +80,12 @@ class SearchResults(LazyObject):
 class ShowSearch(TemplateView):
     template_name = "combio_app/search.html"
     q = ""
+    current_result = 0
+    s_object = None
 
     def get(self, request, *args, **kwargs):
         page = request.GET.get("page")
+        self.current_result = request.GET.get("result")
         s = RecordDocument.search().sort("id")
         self.q = request.GET.get("q", "")
         if self.q:
@@ -99,6 +104,10 @@ class ShowSearch(TemplateView):
         context["nbar"] = "search"
         context["q"] = self.q
         context["results"] = self.results
-        context["ids"] = list(self.total_results)
+        if self.current_result:
+            context["current_result"] = int(self.current_result)
+        else:
+            if self.results:
+                context["current_result"] = self.results[0].id
         context["results_count"] = self.results.paginator.count
         return context

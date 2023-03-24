@@ -42,12 +42,18 @@ module.exports = {
     // '../../**/*.py'
   ],
   theme: {
+    fontFamily: {
+      sans: ['"Apercu Pro"', "Helvetica", "Roboto", "Arial"],
+      serif: ['"Sectra Book"', "Times", "Vollkorn"],
+    },
     extend: {
       colors: {
         "mpiwg-green": "#006464",
+        "mpiwg-subdued-green": "#739187",
         "mpiwg-light-green": "#50FA96",
         "mpiwg-brown": "#C3BEB9",
         "mpiwg-light-brown": "#fbfafa",
+        "mpiwg-beige": "#e1e1dc",
         "vintage-salmon": "#FEF8EE",
         "error-red": "#fccccc",
         "dark-red": "#660e0e",

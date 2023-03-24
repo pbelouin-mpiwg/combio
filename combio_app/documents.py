@@ -7,9 +7,13 @@ from .models import Record, Collection
 class RecordDocument(Document):
     collection = fields.ObjectField(properties={"name": fields.TextField()})
     metadata = fields.ObjectField()
+    title = fields.TextField()
 
     def prepare_metadata(self, instance):
         return instance.metadata
+
+    def prepare_title(self, instance):
+        return instance.metadata["combio"]["title"]
 
     class Index:
         # Name of the Elasticsearch index
