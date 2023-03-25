@@ -8,6 +8,7 @@ class RecordDocument(Document):
     collection = fields.ObjectField(properties={"pk": fields.KeywordField(), "name": fields.TextField()})
     metadata = fields.NestedField()
     title = fields.TextField()
+    permalink = fields.TextField()
     interviewers = fields.ListField(fields.TextField())
     interviewees = fields.ListField(fields.TextField())
     participants = fields.ListField(fields.TextField())

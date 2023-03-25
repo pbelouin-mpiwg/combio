@@ -1,0 +1,30 @@
+{% extends "combio_app/base.html" %}
+{% load i18n %}
+{% load static %}]
+{% block container %}
+  <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
+        <div class="mb-4">
+          <span class="text-3xl text-mpiwg-green">{{record.title}}</span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Interviewees:</span>
+          <span>
+                {{ record.interviewees|join:", " }}
+          </span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+        <span class="font-bold">Interviewers:</span>
+           <span>
+                {{ record.interviewers|join:", " }}
+           </span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Participants:</span> 
+          <span>
+                {{ record.participants|join:", " }}
+          </span>
+        </div>
+        <div>
+        </div>
+  </div>
+{% endblock %}

@@ -13,13 +13,13 @@
 }
 
 .active {
-  background-color: #4AAE9B;
+  background-color: #006464;
   color: #ffffff;
 }
 </style>
 {% endblock %} {% verbatim %}
-<div class="grid grid-cols-12 h-min w-full" id="app">
-  <div class="col-span-12 grid w-full p-4 bg-mpiwg-subdued-green">
+<div class="grid grid-cols-12 h-min w-full p-6 pt-12" id="app">
+  <div class="col-span-12 grid w-full p-4 bg-mpiwg-subdued-green border-b border-mpiwg-green">
     <div class="relative">
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -52,7 +52,7 @@
       />
       <button
         v-on:click="submitForm()"
-        class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        class="text-white absolute shadow-md shadow-inner right-2.5 bottom-2.5 bg-mpiwg-subdued-green hover:bg-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
       >
         Search
       </button>
@@ -84,47 +84,59 @@
   <div
     class="col-span-3 font-sans p-4 w-full pt-6 bg-mpiwg-brown text-mpiwg-green"
   >
-    <div v-for="(result, index) in results" class="p-4 block">
-      <a href="#" @click="setCurrent(result)" :key="result.id" :class="{ 'font-bold': isCurrent(result) }">
-        <span class="p-2">{{result.title}} ({{result.collection.name}})</span>
+    <p v-if="total > 0" class="text-center text-lg p-2 bg-mpiwg-beige text-mpiwg-green mb-4 shadow-md shadow-inner rounded">{{ total }} results | Page {{currentPage}} of {{totalPages}}</p>
+    <div v-for="(result, index) in results" class="p-2 block" :class="{ 'bg-white text-mpiwg-green shadow-md shadow-inner rounded border border-mpiwg-beige': isCurrent(result) }" @click="setCurrent(result)" :key="result.id">
+      <a :href="'/records/'+result.id" target="_blank" class="underline font-semibold">
+        {{result.title}}
       </a>
+      <p class="font-light">{{result.collection.name}}</p>
     </div>
   </div>
   <div
     class="col-span-9 font-sans w-full bg-mpiwg-beige p-4"
   >
     <div v-if="currentResult">
-      <div class="mb-4">
+      <div class="mb-4 mt-2">
         <span class="text-4xl text-mpiwg-green"
           >{{currentResult.title}}
           <span v-if="currentResult && currentResult.collection"
             >({{currentResult.collection.name}})</span
           ></span
         >
-        <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
-        <div class="text-lg" v-if="currentResult.interviewees">
-          <span class="font-bold text-mpiwg-green">Interviewees: </span>
-          <span> {{ currentResult.interviewees.join(", ") }} </span>
-        </div>
-        <div class="text-lg" v-if="currentResult.interviewers">
-          <span class="text-mpiwg-green font-bold">Interviewers: </span>
-          <span> {{ currentResult.interviewers.join(", ") }} </span>
-        </div>
-        <div class="text-lg" v-if="currentResult.participants">
-          <span class="text-mpiwg-green font-bold">Participants: </span>
-          <span> {{ currentResult.participants.join(", ") }} </span>
-        </div>
-        <div
-          class="text-lg"
-          v-if="currentResult && currentResult.meta && currentResult.meta.highlight"
+        <a v-if="currentResult && currentResult.metadata"
+        class="text-white shadow-md shadow-inner float-right bg-mpiwg-subdued-green hover:bg-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        :href="currentResult.metadata.combio.permalink" target="_blank"
         >
-          <span class="text-mpiwg-green font-bold">Hits: </span>
-          <div v-for="(value, key) in currentResult.meta.highlight" :key="key">
-            <span class="text-mpiwg-green font-bold capitalize"
-              >{{ key }}: </span
-            >
-            <span v-html="value"></span>
-            <br/>
+        Permalink
+        </a>
+        
+        <div class="bg-white my-4 p-4 shadow-md shadow-inner rounded mt-6">
+          <div class="text-mpiwg-green text-xl mb-2">Metadata</div>
+          <div class="text-lg" v-if="currentResult.interviewees">
+            <span class="text-mpiwg-green">Interviewees: </span>
+            <span> {{ currentResult.interviewees.join(", ") }} </span>
+          </div>
+          <div class="text-lg" v-if="currentResult.interviewers">
+            <span class="text-mpiwg-green ">Interviewers: </span>
+            <span> {{ currentResult.interviewers.join(", ") }} </span>
+          </div>
+          <div class="text-lg" v-if="currentResult.participants">
+            <span class="text-mpiwg-green ">Participants: </span>
+            <span> {{ currentResult.participants.join(", ") }} </span>
+          </div>
+        </div>
+        <div class="bg-white my-4 p-4 shadow-md shadow-inner rounded" v-if="currentResult && currentResult.meta && currentResult.meta.highlight">
+          <div
+            class="text-lg"
+          >
+            <div class="text-mpiwg-green text-xl mb-2">Hits</div>
+            <div v-for="(value, key) in currentResult.meta.highlight" :key="key">
+              <span class="text-mpiwg-green"
+                >In {{ key }}: </span
+              >
+              <span v-html="value"></span>
+              <br/>
+            </div>
           </div>
         </div>
       </div>
@@ -132,6 +144,7 @@
     </div>
     <div class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green">
     <pagination
+       v-if="total > perPage"
        :total-pages="totalPages"
        :total="total"
        :per-page="perPage"

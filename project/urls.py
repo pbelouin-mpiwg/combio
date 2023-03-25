@@ -31,6 +31,7 @@ urlpatterns = [
     path("search/", combio_app.views.ShowSearch.as_view(), name="search"),
     path("api/search/", json_view(combio_app.views.Search.as_view()), name="api_search"),
     path("api/collections/", json_view(combio_app.views.ShowCollections.as_view()), name="api_collections"),
+    path("records/<int:pk>/", combio_app.views.ShowRecord.as_view(), name="show_record"),
 ]
 
 if settings.DEBUG:

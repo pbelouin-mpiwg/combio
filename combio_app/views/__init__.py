@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.views.generic import DetailView
 from elasticsearch_dsl.query import SimpleQueryString
 from django.core.paginator import Paginator
 from django.utils.functional import LazyObject
 from pprint import pprint
 from jsonview.views import JsonView
+
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -37,6 +39,51 @@ __all__ = [
 
 class LandingView(TemplateView):
     template_name = "combio_app/landing.html"
+    Record.objects.all().delete()
+    i = 0
+    while i < 50:
+        r = Record(
+            transcript="Cruisin' down the street in my '64 Jockin' the freaks, clockin' the dough Went to the park to get the scoop Knuckleheads out there cold-shootin' some hoops A car pulls up, who can it be?A fresh El Camino rollin', Kilo GHe rolls down his window and he started to say 'It's all about makin' that GTA'",
+            metadata={
+                "combio": {
+                    "title": "Boyz-n-the-Hood",
+                    "permalink": "https://www.youtube.com/watch?v=PWVNzYMyLTY",
+                    "participants": [
+                        {"name": "Pascal Belouin", "role": "interviewer"},
+                        {"name": "Kim Pham", "role": "interviewee"},
+                        {"name": "Michael Winter", "role": "interviewee"},
+                        {"name": "Calvin Yeh", "role": "participant"},
+                        {"name": "Hassan El Hajj", "role": "participant"},
+                    ],
+                }
+            },
+        )
+        col = Collection.objects.all()[0]
+        r.collection = col
+        r.save()
+        i = i + 1
+    i = 0
+    while i < 50:
+        r = Record(
+            transcript="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            metadata={
+                "combio": {
+                    "title": "Medical ethics education in Britain, 1963-1993 : the transcript of a Witness Seminar held by the Wellcome Trust Centre for the History of Medicine at UCL, London.",
+                    "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
+                    "participants": [
+                        {"name": "Pascal Belouin", "role": "interviewer"},
+                        {"name": "Kim Pham", "role": "interviewee"},
+                        {"name": "Michael Winter", "role": "interviewee"},
+                        {"name": "Calvin Yeh", "role": "participant"},
+                        {"name": "Hassan El Hajj", "role": "participant"},
+                    ],
+                }
+            },
+        )
+        col = Collection.objects.all()[1]
+        r.collection = col
+        r.save()
+        i = i + 1
 
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)
@@ -144,3 +191,23 @@ class Search(JsonView):
 @method_decorator(login_required, name="dispatch")
 class ShowSearch(TemplateView):
     template_name = "combio_app/search.html"
+
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["nbar"] = "search"
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class ShowRecord(DetailView):
+    model = Record
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
