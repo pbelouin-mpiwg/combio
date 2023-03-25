@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from jsonview.decorators import json_view
 
 import combio_app.views
 
@@ -28,6 +29,9 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("records/", combio_app.views.ShowRecords.as_view(), name="records"),
     path("search/", combio_app.views.ShowSearch.as_view(), name="search"),
+    path("vue_search/", combio_app.views.ShowVueSearch.as_view(), name="vue_search"),
+    path("api/search/", json_view(combio_app.views.Search.as_view()), name="api_search"),
+    path("api/collections/", json_view(combio_app.views.ShowCollections.as_view()), name="api_collections"),
 ]
 
 if settings.DEBUG:

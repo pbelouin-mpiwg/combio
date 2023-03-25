@@ -11,7 +11,10 @@ def default_site(apps, schema_editor):
     Site.objects.using(db_alias).all().delete()
 
     # Register SITE_ID = 1
-    Site.objects.using(db_alias).create(domain="ddt.ron.sh", name="Docker+Django Template")
+    Site.objects.using(db_alias).create(
+        domain="combio.mpiwg-berlin.mpg.de",
+        name="Commoning Biomedicine",
+    )
 
 
 class Migration(migrations.Migration):

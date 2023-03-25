@@ -5,7 +5,7 @@ from .models import Record, Collection
 
 @registry.register_document
 class RecordDocument(Document):
-    collection = fields.ObjectField(properties={"name": fields.TextField()})
+    collection = fields.ObjectField(properties={"pk": fields.KeywordField(), "name": fields.TextField()})
     metadata = fields.NestedField()
     title = fields.TextField()
     interviewers = fields.ListField(fields.TextField())

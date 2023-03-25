@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row px-5" style="height: calc(100vh - 56px);">
             <div class="col-lg-5 col-sm-12 justify-content-center align-self-center">
-                <h1>{% translate "Confirm E-mail Address" %}</h1>
+                <h1 class="text-3xl text-mpiwg-green mb-6">{% translate "Confirm E-mail Address" %}</h1>
 
                 {% if confirmation %}
 
@@ -19,7 +19,7 @@
 
                     <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-info" role="button">{% translate "Confirm" %}</button>
+                        <button type="submit" class="bg-white hover:bg-gray-100 mt-6 text-gray-800 py-2 px-4 border border-gray-400 rounded shadow mr-2" role="button">{% translate "Confirm" %}</button>
                     </form>
 
                 {% else %}

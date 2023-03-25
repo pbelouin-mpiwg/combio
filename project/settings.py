@@ -174,7 +174,7 @@ EMAIL_PORT = os.getenv("SMTP_PORT", 587)
 EMAIL_HOST_USER = os.getenv("SMTP_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("SMTP_HOST_PASSWORD")
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = f"docker-django-template <{EMAIL_HOST_USER}>"
+DEFAULT_FROM_EMAIL = f"Commoning Biomedicine <{EMAIL_HOST_USER}>"
 
 LOGIN_URL = reverse_lazy("account_login")
 LOGIN_REDIRECT_URL = reverse_lazy("combio_app:protected")

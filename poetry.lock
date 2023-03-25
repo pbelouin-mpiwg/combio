@@ -535,6 +535,18 @@ elasticsearch-dsl = ">=7.2.0,<8.0.0"
 six = "*"
 
 [[package]]
+name = "django-jsonview"
+version = "2.0.0"
+description = "Always return JSON from your Django view."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-jsonview-2.0.0.tar.gz", hash = "sha256:1871983f6c7ab0bec1bad3249b06ce64c47d3bed57cd190f87e5acaf65722ebb"},
+    {file = "django_jsonview-2.0.0-py2.py3-none-any.whl", hash = "sha256:77345393f8e8bb3279b9ba9fb2db687adfa74d41feab972521545d47103d321b"},
+]
+
+[[package]]
 name = "django-tailwind"
 version = "3.5.0"
 description = "Tailwind CSS Framework for Django projects"
@@ -1896,4 +1908,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "05ad722c27cb3024354230715869bf37e42f4bd6a25b8dfaa5a1c113cfe245a6"
+content-hash = "42ccffdfd924501e80a187db3627e4a4c295510526c03fb67731cd6654a6647e"
