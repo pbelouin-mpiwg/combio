@@ -1,0 +1,151 @@
+{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} 
+{% block container %}
+{% block style %}
+<style>
+em {
+    color: red;
+}
+</style>
+{% endblock %}
+<div class="grid grid-cols-12 w-full max-h-fit">
+  <div class="col-span-12 grid w-full p-4 bg-mpiwg-subdued-green">
+    <form method="get" action="/search/" id="search-form">
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5 text-gray-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+        <input
+          {% if q %}
+            value="{{q}}"
+          {% endif %}
+          name="q"
+          type="search"
+          id="default-search"
+          class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
+          placeholder="Search Oral Histories"
+        />
+        <button
+          type="submit"
+          class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        >
+          Search
+        </button>
+      </div>
+      <div>
+  <div class="flex mt-4 text-white">
+    {% for collection in collections %}
+  <div class="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
+    <input
+      class="relative float-left mt-[0.15rem] mr-[2px] -ml-[1.5rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-mpiwg-green checked:bg-mpiwg-green checked:before:opacity-[0.16] checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:ml-[0.25rem] checked:focus:after:-mt-px checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-t-0 checked:focus:after:border-l-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent"
+      type="checkbox"
+      {% if cols %}
+        {% if collection.pk in cols %}
+           checked
+        {% endif %}
+      {% else %}
+           checked
+      {% endif %}
+      name="c"
+      id="collection_{{ collection.pk }}"
+      value="{{ collection.pk }}" />
+    <label
+      class="inline-block pl-[0.15rem] hover:cursor-pointer"
+      for="collection_{{ collection.pk }}"
+      >{{collection.name}}</label>
+  </div>
+  {% endfor %}
+</div>
+</div>
+    </form>
+  </div>
+  <div
+    class="col-span-3 font-sans p-4 w-full pt-6 bg-mpiwg-brown max-h-fit h-screen text-mpiwg-green"
+  >
+    {% for result in results %}
+    <div class="{% if current_result == result.id %} bg-white {% endif %} p-4">
+    <a href="/search?{{ params|safe }}&result={{result.id}}">
+      <span class="p-2">{{result.title}} ({{result.collection.name}})</span>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
+    {% for result in results %} 
+        {% autoescape off %}
+        {% if current_result == result.id %}
+        <div class="mb-4">
+          <span class="text-3xl text-mpiwg-green">{{result.title}}</span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Interviewees:</span>
+          <span>
+            {% if result.meta.highlight.interviewees %}
+                {{ result.meta.highlight.interviewees|join:", " }}
+            {% else %}
+                {{ result.interviewees|join:", " }}
+            {% endif %}
+          </span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+        <span class="font-bold">Interviewers:</span>
+           <span>
+            {% if result.meta.highlight.interviewers %}
+                {{ result.meta.highlight.interviewers|join:", " }}
+            {% else %}
+                {{ result.interviewers|join:", " }}
+            {% endif %}
+           </span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Participants:</span> 
+          <span>
+            {% if result.meta.highlight.participants %}
+                {{ result.meta.highlight.participants|join:", " }}
+            {% else %}
+                {{ result.participants|join:", " }}
+            {% endif %}
+          </span>
+        </div>
+        <div>
+          {% for snippet in result.meta.highlight.transcript %}
+            <span class="text-lg">{{ snippet }}</span>
+          {% endfor %}
+        </div>
+        {% endif %} 
+     {% endautoescape %}
+    {% endfor %}
+  </div>
+</div>
+<script>
+window.addEventListener("keydown", (e) => {
+      if (e.key == "ArrowLeft") {
+      }
+      if (
+        e.key == "ArrowRight") {
+        window.location.href = "{{ request.path }}";
+      }
+      if (e.key == "ArrowDown") {
+        window.location.href = "{{ request.path }}?q={{q}}&result={{current_result}}";
+      }
+      if (
+        e.key == "ArrowUp") {
+      }
+    });
+</script>
+{% endblock %}

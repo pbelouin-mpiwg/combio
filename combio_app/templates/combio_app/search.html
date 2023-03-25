@@ -1,151 +1,314 @@
-{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} 
-{% block container %}
-{% block style %}
+{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} {% block container %} {% block style %}
 <style>
-em {
+  em {
     color: red;
+  }
+
+  .pagination {
+  list-style-type: none;
+}
+
+.pagination-item {
+  display: inline-block;
+}
+
+.active {
+  background-color: #4AAE9B;
+  color: #ffffff;
 }
 </style>
-{% endblock %}
-<div class="grid grid-cols-12 w-full max-h-fit">
+{% endblock %} {% verbatim %}
+<div class="grid grid-cols-12 h-min w-full" id="app">
   <div class="col-span-12 grid w-full p-4 bg-mpiwg-subdued-green">
-    <form method="get" action="/search/" id="search-form">
-      <div class="relative">
-        <div
-          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5 text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
-        </div>
-        <input
-          {% if q %}
-            value="{{q}}"
-          {% endif %}
-          name="q"
-          type="search"
-          id="default-search"
-          class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
-          placeholder="Search Oral Histories"
-        />
-        <button
-          type="submit"
-          class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
-        >
-          Search
-        </button>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          ></path>
+        </svg>
       </div>
-      <div>
-  <div class="flex mt-4 text-white">
-    {% for collection in collections %}
-  <div class="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-    <input
-      class="relative float-left mt-[0.15rem] mr-[2px] -ml-[1.5rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-mpiwg-green checked:bg-mpiwg-green checked:before:opacity-[0.16] checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:ml-[0.25rem] checked:focus:after:-mt-px checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-t-0 checked:focus:after:border-l-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent"
-      type="checkbox"
-      {% if cols %}
-        {% if collection.pk in cols %}
-           checked
-        {% endif %}
-      {% else %}
-           checked
-      {% endif %}
-      name="c"
-      id="collection_{{ collection.pk }}"
-      value="{{ collection.pk }}" />
-    <label
-      class="inline-block pl-[0.15rem] hover:cursor-pointer"
-      for="collection_{{ collection.pk }}"
-      >{{collection.name}}</label>
-  </div>
-  {% endfor %}
-</div>
-</div>
-    </form>
+      <input
+        v-model="q"
+        type="search"
+        id="default-search"
+        class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
+        placeholder="Search Oral Histories"
+        @change="submitForm()"
+        @click="selectAll"
+        ref="input"
+      />
+      <button
+        v-on:click="submitForm()"
+        class="text-white absolute right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+      >
+        Search
+      </button>
+    </div>
+    <div>
+      <div class="flex mt-4 text-white">
+        <div
+          v-for="collection in collections"
+          class="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]"
+        >
+          <input
+            class="relative float-left mt-[0.15rem] mr-[2px] -ml-[1.5rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-mpiwg-green checked:bg-mpiwg-green checked:before:opacity-[0.16] checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:ml-[0.25rem] checked:focus:after:-mt-px checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-t-0 checked:focus:after:border-l-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent"
+            type="checkbox"
+            v-model="collection.checked"
+            :value="collection.pk"
+            :name="collection.pk"
+            :id="collection.pk"
+            @change="submitForm()"
+          />
+          <label
+            class="inline-block pl-[0.15rem] hover:cursor-pointer"
+            :for="collection.pk"
+            >{{collection.name}}</label
+          >
+        </div>
+      </div>
+    </div>
   </div>
   <div
-    class="col-span-3 font-sans p-4 w-full pt-6 bg-mpiwg-brown max-h-fit h-screen text-mpiwg-green"
+    class="col-span-3 font-sans p-4 w-full pt-6 bg-mpiwg-brown text-mpiwg-green"
   >
-    {% for result in results %}
-    <div class="{% if current_result == result.id %} bg-white {% endif %} p-4">
-    <a href="/search?{{ params|safe }}&result={{result.id}}">
-      <span class="p-2">{{result.title}} ({{result.collection.name}})</span>
+    <div v-for="(result, index) in results" class="p-4 block">
+      <a href="#" @click="setCurrent(result)" :key="result.id" :class="{ 'font-bold': isCurrent(result) }">
+        <span class="p-2">{{result.title}} ({{result.collection.name}})</span>
       </a>
     </div>
-    {% endfor %}
   </div>
-  <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
-    {% for result in results %} 
-        {% autoescape off %}
-        {% if current_result == result.id %}
-        <div class="mb-4">
-          <span class="text-3xl text-mpiwg-green">{{result.title}}</span>
+  <div
+    class="col-span-9 font-sans w-full bg-mpiwg-beige p-4"
+  >
+    <div v-if="currentResult">
+      <div class="mb-4">
+        <span class="text-4xl text-mpiwg-green"
+          >{{currentResult.title}}
+          <span v-if="currentResult && currentResult.collection"
+            >({{currentResult.collection.name}})</span
+          ></span
+        >
+        <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
+        <div class="text-lg" v-if="currentResult.interviewees">
+          <span class="font-bold text-mpiwg-green">Interviewees: </span>
+          <span> {{ currentResult.interviewees.join(", ") }} </span>
         </div>
-        <div class="text-lg text-mpiwg-green">
-          <span class="font-bold">Interviewees:</span>
-          <span>
-            {% if result.meta.highlight.interviewees %}
-                {{ result.meta.highlight.interviewees|join:", " }}
-            {% else %}
-                {{ result.interviewees|join:", " }}
-            {% endif %}
-          </span>
+        <div class="text-lg" v-if="currentResult.interviewers">
+          <span class="text-mpiwg-green font-bold">Interviewers: </span>
+          <span> {{ currentResult.interviewers.join(", ") }} </span>
         </div>
-        <div class="text-lg text-mpiwg-green">
-        <span class="font-bold">Interviewers:</span>
-           <span>
-            {% if result.meta.highlight.interviewers %}
-                {{ result.meta.highlight.interviewers|join:", " }}
-            {% else %}
-                {{ result.interviewers|join:", " }}
-            {% endif %}
-           </span>
+        <div class="text-lg" v-if="currentResult.participants">
+          <span class="text-mpiwg-green font-bold">Participants: </span>
+          <span> {{ currentResult.participants.join(", ") }} </span>
         </div>
-        <div class="text-lg text-mpiwg-green">
-          <span class="font-bold">Participants:</span> 
-          <span>
-            {% if result.meta.highlight.participants %}
-                {{ result.meta.highlight.participants|join:", " }}
-            {% else %}
-                {{ result.participants|join:", " }}
-            {% endif %}
-          </span>
+        <div
+          class="text-lg"
+          v-if="currentResult && currentResult.meta && currentResult.meta.highlight"
+        >
+          <span class="text-mpiwg-green font-bold">Hits: </span>
+          <div v-for="(value, key) in currentResult.meta.highlight" :key="key">
+            <span class="text-mpiwg-green font-bold capitalize"
+              >{{ key }}: </span
+            >
+            <span v-html="value"></span>
+            <br/>
+          </div>
         </div>
-        <div>
-          {% for snippet in result.meta.highlight.transcript %}
-            <span class="text-lg">{{ snippet }}</span>
-          {% endfor %}
-        </div>
-        {% endif %} 
-     {% endautoescape %}
-    {% endfor %}
+      </div>
+    </div>
+    </div>
+    <div class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green">
+    <pagination
+       :total-pages="totalPages"
+       :total="total"
+       :per-page="perPage"
+       :current-page="currentPage"
+       @pagechanged="onPageChange"
+    />
+    </div>
   </div>
 </div>
-<script>
-window.addEventListener("keydown", (e) => {
-      if (e.key == "ArrowLeft") {
-      }
-      if (
-        e.key == "ArrowRight") {
-        window.location.href = "{{ request.path }}";
-      }
-      if (e.key == "ArrowDown") {
-        window.location.href = "{{ request.path }}?q={{q}}&result={{current_result}}";
-      }
-      if (
-        e.key == "ArrowUp") {
-      }
-    });
+<script type="text/x-template" id="pagination">
+ <ul class="pagination">
+    <li 
+      class="pagination-item"
+    >
+      <button 
+        type="button" 
+        class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
+        @click="onClickFirstPage"
+        :disabled="isInFirstPage"
+        aria-label="Go to first page"
+      >
+        First
+      </button>
+    </li>
+
+    <li
+      class="pagination-item"
+    >
+      <button 
+        type="button" 
+        @click="onClickPreviousPage"
+        :disabled="isInFirstPage"
+        aria-label="Go to previous page"
+        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+      >
+        Previous
+      </button>
+    </li>
+
+    <li v-for="page in pages" class="pagination-item">
+      <button 
+        type="button" 
+        @click="onClickPage(page.name)"
+        :disabled="page.isDisabled"
+        :class="{ active: isPageActive(page.name) }"
+        :aria-label="`Go to page number ${page.name}`"
+        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+        
+      >
+        {{ page.name }}
+      </button>
+    </li>
+
+    <li class="pagination-item">
+      <button 
+        type="button" 
+        @click="onClickNextPage"
+        :disabled="isInLastPage"
+        aria-label="Go to next page"
+        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+      >
+        Next
+      </button>
+    </li>
+
+    <li class="pagination-item">
+      <button 
+        type="button" 
+        @click="onClickLastPage"
+        :disabled="isInLastPage"
+        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
+        aria-label="Go to last page"
+      >
+        Last
+      </button>
+    </li>
+  </ul>
 </script>
-{% endblock %}
+<script src="/static/combio_app/js/pagination.js" ></script>
+<script>
+
+  const app = Vue.createApp({
+    components: {
+      pagination: Pagination,
+    },
+    data() {
+      return {
+        objects: {},
+        total: 0,
+        currentPage: 1,
+        perPage: 20,
+        results: [],
+        currentResult: {},
+        collections: [],
+        q: "",
+      };
+    },
+    computed: {
+        totalPages() {
+        return parseInt(this.total / this.perPage)
+      }
+    },
+    methods: {
+      setCurrent(result){
+        this.currentResult = result;
+        //var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?current='+result.id;
+        //window.history.pushState({path:newurl},'',newurl);
+      },
+      isCurrent(result) {
+        if(this.currentResult){
+          return (result.id == this.currentResult.id)
+        }else {
+          return false
+        }
+      },
+      onPageChange(page) {
+      this.currentPage = page;
+      this.submitForm()
+    },
+      selectAll() {
+        this.$refs.input.select();
+      },
+      submitForm: async function () {
+        let selectedCollections = this.collections.filter(
+          (element) => element.checked
+        );
+        let params = { q: this.q, c: selectedCollections.map((c) => c.pk), per_page: this.perPage, page: this.currentPage };
+        await axios
+          .get("/api/search", { params })
+          .then((response) => {
+            this.results = response["data"]["results"];
+            this.total = response["data"]["results_count"] 
+          });
+        this.currentResult = this.results[0];
+      },
+    },
+    created() {
+        window.addEventListener("keydown", (e) => {
+          if (e.key == "ArrowLeft" && this.currentPage != 1) {
+            e.preventDefault();
+            this.onPageChange(this.currentPage - 1);
+          }
+          if (
+            e.key == "ArrowRight" &&
+            this.currentPage < this.totalPages
+          ) {
+            e.preventDefault();
+            this.onPageChange(this.currentPage + 1);
+          }
+          if (
+            e.key == "ArrowUp" &&
+            this.currentResult &&
+            this.currentResult.index > 0
+          ) {
+            e.preventDefault();
+            this.setCurrent(this.results.find(r => r.index == (this.currentResult.index - 1)))
+          }
+           if (
+            e.key == "ArrowDown" &&
+            this.currentResult &&
+            this.total > 1 &&
+            this.currentResult.index < (this.perPage - 1)
+          ) {
+            e.preventDefault();
+            this.setCurrent(this.results.find(r => r.index == (this.currentResult.index + 1)))
+          }
+        });
+    },
+    async mounted() {
+      axios.get("/api/collections").then(async (response) => {
+        this.collections = response["data"]["collections"];
+        this.collections = this.collections.map((c) =>
+          Object.assign(c, { checked: true })
+        );
+        this.submitForm();
+      });
+    },
+  }).mount("#app");
+</script>
+{% endverbatim %} {% endblock container %}
