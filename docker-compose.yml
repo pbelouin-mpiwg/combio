@@ -33,6 +33,7 @@ services:
       - 9200:9200
   web:
     build: .
+    container_name: web
     image: docker-django-app
     command:
       - /bin/sh
@@ -46,6 +47,7 @@ services:
       - .:/code
     expose:
       - 8081
+      - 6800
     env_file:
       - env/app.env
       - env/database.env

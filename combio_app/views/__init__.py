@@ -8,7 +8,7 @@ from pprint import pprint
 
 
 from django.views import View
-from ..models import Record
+from ..models import Record, Collection
 from ..documents import RecordDocument
 
 from .errors import (
@@ -90,8 +90,17 @@ class ShowSearch(TemplateView):
         self.q = request.GET.get("q", "")
         if self.q:
             # s = s.query('simple_query_string',query=self.q, fuzziness='AUTO')
-            s = s.filter(SimpleQueryString(query=self.q, fields=["transcript"], default_operator="and"))
+            s = s.filter(
+                SimpleQueryString(
+                    query=self.q,
+                    fields=["transcript", "interviewers", "interviewees", "participants"],
+                    default_operator="and",
+                )
+            )
             s = s.highlight("transcript", number_of_fragments=0)
+            s = s.highlight("interviewers", number_of_fragments=0)
+            s = s.highlight("interviewees", number_of_fragments=0)
+            s = s.highlight("participants", number_of_fragments=0)
         self.es_query = s.to_dict()
         self.total_results = SearchResults(s)
         paginator = Paginator(self.total_results, 35)
@@ -100,7 +109,7 @@ class ShowSearch(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["records"] = Record.objects.all()
+        context["collections"] = Collection.objects.all()
         context["nbar"] = "search"
         context["q"] = self.q
         context["results"] = self.results

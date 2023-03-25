@@ -1,11 +1,11 @@
 {% extends "combio_app/base.html" %} {% load i18n %} {% load static %}
   {% block container %}
-<div class="grid h-screen place-items-center">
+<div class="grid">
 
   <form method="post" action="{% url 'account_signup' %}">
     {% csrf_token %}
     <div
-      class="w-[520px] px-8 py-6 m-auto bg-white shadow-lg rounded bg-neutral-200"
+      class="w-[520px] px-8 py-6 m-auto"
     >
       <div>
         <div class="mt-4">
@@ -27,12 +27,13 @@
             </div>
             <div class="col-span-1"></div>
           </div>
-          <span>
+          <span class="text-3xl mb-6 text-mpiwg-green text-center">Sign Up</span><br/><br/>
+          <span class="mt-4">
             Already have an account? Then please
-            <a href="{{ login_url }}" class="underline">login</a> first.
+            <a href="{{ login_url }}" class="underline text-mpiwg-green">login</a> first.
           </span>
           <div class="mt-4">
-            <label class="block mt-4" for="username">Username</label>
+            <label class="block mt-4 font-bold" for="username">Username</label>
             <span class="italic text-red-500"
               >{{ form.username.errors | safe }}</span
             >
@@ -41,7 +42,6 @@
               placeholder="Username"
               id="id_username"
               name="username"
-              placeholder="Username"
               {% if form.username.value %}
               value="{{form.username.value}}"
               {% endif %}
@@ -49,7 +49,7 @@
             />
           </div>
             <div class="mt-4">
-            <label class="block mt-4" for="email">Email</label>
+            <label class="block mt-4 font-bold" for="email">Email</label>
             <span class="italic text-red-500"
               >{{ form.email.errors | safe }}</span
             >
@@ -58,7 +58,6 @@
               placeholder="Email"
               id="id_email"
               name="email"
-              placeholder="Username"
               {% if form.email.value %}
               value="{{form.email.value}}"
               {% endif %}
@@ -66,7 +65,7 @@
             />
           </div>
             <div class="mt-4">
-            <label class="block mt-4" for="first_name">First Name</label>
+            <label class="block mt-4 font-bold" for="first_name">First Name</label>
             <span class="italic text-red-500"
               >{{ form.first_name.errors | safe }}</span
             >
@@ -75,7 +74,6 @@
               placeholder="First Name"
               id="id_first_name"
               name="first_name"
-              placeholder="First Name"
               {% if form.first_name.value %}
               value="{{form.first_name.value}}"
               {% endif %}
@@ -83,7 +81,7 @@
             />
           </div>
             <div class="mt-4">
-            <label class="block mt-4" for="last_name">Last Name</label>
+            <label class="block mt-4 font-bold" for="last_name">Last Name</label>
             <span class="italic text-red-500"
               >{{ form.last_name.errors | safe }}</span
             >
@@ -92,7 +90,6 @@
               placeholder="Last Name"
               id="id_last_name"
               name="last_name"
-              placeholder="Last Name"
               {% if form.last_name.value %}
               value="{{form.last_name.value}}"
               {% endif %}
@@ -100,7 +97,7 @@
             />
           </div>
           <div class="mt-4">
-            <label class="block">Password</label>
+            <label class="block font-bold">Password</label>
             <span class="italic text-red-500"
               >{{ form.password1.errors | safe }}</span
             >
@@ -116,7 +113,7 @@
             />
           </div>
           <div class="mt-4">
-            <label class="block">Password Confirmation</label>
+            <label class="block font-bold">Password Confirmation</label>
             <span class="italic text-red-500"
               >{{ form.password2.errors | safe }}</span
             >

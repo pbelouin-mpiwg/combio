@@ -1,11 +1,11 @@
 {% extends "combio_app/base.html" %} {% load i18n %} {% load account socialaccount
 %} {% load static %}{% block container %}
-<div class="grid h-screen place-items-center">
+<div class="grid h-screen">
   <form method="post" action="{% url 'account_login' %}">
     {% csrf_token %}
 
     <div
-      class="w-[520px] px-8 py-6 m-auto bg-white shadow-lg rounded bg-neutral-200"
+      class="w-[520px] px-8 py-6 m-auto bg-white bg-neutral-200"
     >
       <div>
         <div class="mt-4">
@@ -27,15 +27,16 @@
             </div>
             <div class="col-span-1"></div>
           </div>
+          <span class="text-3xl mb-6 text-mpiwg-green text-center">Login</span><br/><br/>
           <span>
             If you have not created an account yet, then please
-            <a href="{{ signup_url }}" class="underline">register</a> first.
+            <a href="{{ signup_url }}" class="underline text-mpiwg-green">register</a> first.
           </span>
           <div class="mt-4">
             <span class="italic text-red-500"
               >{{ form.non_field_errors | safe }}</span
             >
-            <label class="block mt-4" for="email">Username</label>
+            <label class="block mt-4 font-bold" for="email">Username</label>
             <span class="italic text-red-500"
               >{{ form.login.errors | safe }}</span
             >
@@ -53,7 +54,7 @@
             />
           </div>
           <div class="mt-4">
-            <label class="block">Password</label>
+            <label class="block font-bold">Password</label>
             <span class="italic text-red-500"
               >{{ form.password.errors | safe }}</span
             >
@@ -72,7 +73,7 @@
           <div class="mt-4">
             <input
               type="checkbox"
-              class="mr-2"
+              class="mr-2 checked:bg-mpiwg-green"
               name="remember"
               id="id_remember"
             />

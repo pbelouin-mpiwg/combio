@@ -6,11 +6,23 @@ from .models import Record, Collection
 @registry.register_document
 class RecordDocument(Document):
     collection = fields.ObjectField(properties={"name": fields.TextField()})
-    metadata = fields.ObjectField()
+    metadata = fields.NestedField()
     title = fields.TextField()
+    interviewers = fields.ListField(fields.TextField())
+    interviewees = fields.ListField(fields.TextField())
+    participants = fields.ListField(fields.TextField())
 
     def prepare_metadata(self, instance):
         return instance.metadata
+
+    def prepare_interviewers(self, instance):
+        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "interviewer"]
+
+    def prepare_interviewees(self, instance):
+        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "interviewee"]
+
+    def prepare_participants(self, instance):
+        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "participant"]
 
     def prepare_title(self, instance):
         return instance.metadata["combio"]["title"]

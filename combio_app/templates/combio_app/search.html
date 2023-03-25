@@ -37,9 +37,8 @@ em {
           name="q"
           type="search"
           id="default-search"
-          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
-          placeholder="Search Oral History"
-          required
+          class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
+          placeholder="Search Oral Histories"
         />
         <button
           type="submit"
@@ -48,6 +47,25 @@ em {
           Search
         </button>
       </div>
+      <div>
+  <div class="flex mt-4 text-white">
+  <span class="mr-2 font-bold">Collections:</span>
+    {% for collection in collections %}
+  <div class="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
+    <input
+      class="relative float-left mt-[0.15rem] mr-[2px] -ml-[1.5rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-mpiwg-green checked:bg-mpiwg-green checked:before:opacity-[0.16] checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:ml-[0.25rem] checked:focus:after:-mt-px checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-t-0 checked:focus:after:border-l-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent"
+      type="checkbox"
+      checked
+      id="collection_{{collection.pk}}"
+      value="collection.pk" />
+    <label
+      class="inline-block pl-[0.15rem] hover:cursor-pointer"
+      for="collection_{{collection.pk}}"
+      >{{collection.name}}</label>
+  </div>
+  {% endfor %}
+</div>
+</div>
     </form>
   </div>
   <div
@@ -56,31 +74,40 @@ em {
     {% for result in results %}
     <div class="{% if current_result == result.id %} bg-white {% endif %} p-4">
     <a href="/search?q={{q}}&result={{result.id}}">
-      <span class="p-2"
-        >{{result.collection.name}}</span
-      >
-      <span class="p-2">{{result.title}}</span>
+      <span class="p-2">{{result.title}} ({{result.collection.name}})</span>
       </a>
     </div>
     {% endfor %}
   </div>
   <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
     {% for result in results %} 
+        {% autoescape off %}
         {% if current_result == result.id %}
-        <div>
+        <div class="mb-4">
           <span class="text-3xl text-mpiwg-green">{{result.title}}</span>
         </div>
-        <div>
-          {% for field,value in result.metadata.combio.items %} 
-          <span class="text-lg text-mpiwg-green">{{ field }}</span>
-          {% endfor %}
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Interviewees:</span>
+          <span>
+            {{ result.meta.highlight.interviewees|join:", "|safe }}
+          </span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+        <span class="font-bold">Interviewers:</span>
+           <span>
+            {{ result.meta.highlight.interviewers|join:", "}}</span>
+        </div>
+        <div class="text-lg text-mpiwg-green">
+          <span class="font-bold">Participants:</span> 
+          <span>{{ result.meta.highlight.participants|join:", "|safe }}</span>
         </div>
         <div>
           {% for snippet in result.meta.highlight.transcript %}
-            <span class="text-lg">{{ snippet |safe }}</span>
+            <span class="text-lg">{{ snippet }}</span>
           {% endfor %}
         </div>
         {% endif %} 
+     {% endautoescape %}
     {% endfor %}
   </div>
 </div>
