@@ -82,7 +82,7 @@
     </div>
   </div>
   <div
-    class="col-span-3 font-sans p-6 w-full bg-mpiwg-brown text-mpiwg-green"
+    class="col-span-3 font-sans p-6 w-full bg-mpiwg-brown text-mpiwg-green" v-if="results.length > 0"
   >
     <div v-if="total > 0" class="text-center text-lg p-2 bg-mpiwg-beige text-mpiwg-green mb-4 shadow-md shadow-inner rounded"><b>{{ total }}</b> results | Page <b>{{currentPage}}</b> of {{totalPages}}
     </div>
@@ -154,7 +154,8 @@
       </div>
     </div>
     </div>
-    <div class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green">
+    <div class="col-span-12 w-full grid place-items-center text-mpiwg-green text-2xl" v-if="results.length == 0">No Results Found. Please try another search!</div>
+    <div class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green" v-if="results.length > 0">
     <pagination
        v-if="total > perPage"
        :total-pages="totalPages"
