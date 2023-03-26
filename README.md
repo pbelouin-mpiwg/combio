@@ -1,13 +1,4 @@
-# Docker+Django Template
-
-Template repository for a Docker+Django project
-
-## What is in this template
-- Scalable Django web app with login/registration and initial Bootstrap 4 template
-- Nginx for load balancing traffic to the Django web apps when scaled
-- PostgreSQL database
-
-## Architecture
+# Commoning Biomedicine
 
 ![Architecture](./diagrams/architecture.png)
 
@@ -15,23 +6,6 @@ Template repository for a Docker+Django project
 
 - Python 3.10 (optional, development should be done in the provided Docker environment)
 - Docker Desktop (or Docker Compose)
-
-## Demo
-
-You can check this template in action using the URL [https://ddt.ron.sh/](https://ddt.ron.sh/)
-
-## Creating a project from Docker+Django Template
-
-1. Fork this project.
-2. Go to settings and convert your fork to a Template Repository, if not yet checked.
-
-![Make Template Repository](screenshots/make-template-repo.png)
-
-3. Create a new project and specify a Repository template to use.
-
-![Create repo with template](screenshots/create-repo-with-template.png)
-
-4. Happy coding!
 
 ## Build and run
 
