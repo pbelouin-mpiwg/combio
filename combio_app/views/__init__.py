@@ -157,6 +157,19 @@ class ShowSearch(TemplateView):
 
 
 @method_decorator(login_required, name="dispatch")
+class ShowHelp(TemplateView):
+    template_name = "combio_app/help.html"
+
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["nbar"] = "help"
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
 class ShowRecord(DetailView):
     model = Record
 

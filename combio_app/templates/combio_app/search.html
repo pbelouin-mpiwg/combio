@@ -18,12 +18,15 @@
     background-color: #006464;
     color: #ffffff;
   }
+  [v-cloak] {
+    display: none;
+  }
 </style>
 {% endblock %} 
 {% verbatim %}
 <div class="grid grid-cols-12 h-5/6 w-full" id="app">
   <div
-    class="col-span-12 grid w-full p-6 pt-10 bg-mpiwg-subdued-green border-b border-mpiwg-subdued-green"
+    class="v-cloak col-span-12 grid w-full p-6 pt-10 bg-mpiwg-subdued-green border-b border-mpiwg-subdued-green"
   >
     <div class="relative">
       <div
@@ -52,7 +55,8 @@
         class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
         placeholder="Search Oral Histories"
         @change="submitForm();currentPage=1"
-        @click="selectAll"
+        @focus="searchFocus=true"
+        @blur="searchFocus=false"
         ref="input"
       />
       <button
@@ -320,6 +324,7 @@
         objects: {},
         total: 0,
         currentPage: 1,
+        searchFocus: false,
         perPage: 10,
         results: [],
         currentResult: {},
@@ -371,11 +376,11 @@
     },
     created() {
       window.addEventListener("keydown", (e) => {
-        if (e.key == "ArrowLeft" && this.currentPage != 1) {
+        if (e.key == "ArrowLeft" && this.currentPage != 1 && !this.searchFocus) {
           e.preventDefault();
           this.onPageChange(this.currentPage - 1);
         }
-        if (e.key == "ArrowRight" && this.currentPage < this.totalPages) {
+        if (e.key == "ArrowRight" && this.currentPage < this.totalPages && !this.searchFocus) {
           e.preventDefault();
           this.onPageChange(this.currentPage + 1);
         }

@@ -16,6 +16,7 @@ django-elasticsearch-dsl = "^7.3"
 scrapy = "^2.8.0"
 scrapy-djangoitem = "^1.1.1"
 django-jsonview = "^2.0.0"
+fontawesomefree = "^6.3.0"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.0"

@@ -74,7 +74,10 @@ You can then run the following commands.
 
 ### CSS / Tailwind
 1. `python manage.py tailwind start` - starts the tailwind watcher, which recompiles the css file on every change
-2. `python manage.py collectstatic` - creates the static files, necessary to update the css file used by the templates
+2. `python manage.py collectstatic --no-input` - creates the static files, necessary to update the css file used by the templates
+
+### Loading Dummy Test Data
+1. `python manage.py loaddummydata` - loads dummy test data
 
 ### Elasticsearch Index update
 1. `python manage.py search_index --rebuild` - rebuilds the elasticsearch index

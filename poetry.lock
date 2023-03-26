@@ -653,6 +653,17 @@ pycodestyle = ">=2.10.0,<2.11.0"
 pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
+name = "fontawesomefree"
+version = "6.3.0"
+description = "Font Awesome Free"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "fontawesomefree-6.3.0-py3-none-any.whl", hash = "sha256:92627e7585e1d7d113e147a8855bdacd9fc28a6b83a70ca9beb11fafe0da75b6"},
+]
+
+[[package]]
 name = "graphviz"
 version = "0.19.2"
 description = "Simple Python interface for Graphviz"
@@ -1908,4 +1919,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "42ccffdfd924501e80a187db3627e4a4c295510526c03fb67731cd6654a6647e"
+content-hash = "f705ab2d831a481ac0d9ecb958f870c4f29c12d47f738692abb5b05652f6195a"

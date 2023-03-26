@@ -1,0 +1,18 @@
+{% extends "combio_app/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block container %}
+<style>
+.literal {
+    color: green;
+}
+</style>
+<div class="p-6">
+  <div class="font-sans text-3xl text-mpiwg-green mb-4">Help</div>
+  <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
+  <div class="font-sans text-2xl text-mpiwg-green mb-2 mt-4">Search Operators</div>
+  <span class="font-serif text-xl"><p>While using the <a class="text-mpiwg-green underline" href="/search">search bar</a>, the following operators are supported:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><code class="literal">+</code> signifies AND operation</li><li class="listitem"><code class="literal">|</code> signifies OR operation</li><li class="listitem"><code class="literal">-</code> negates a single token</li><li class="listitem"><code class="literal">"</code> wraps a number of tokens to signify a phrase for searching</li><li class="listitem"><code class="literal">*</code> at the end of a term signifies a prefix query</li><li class="listitem"><code class="literal">(</code> and <code class="literal">)</code> signify precedence</li><li class="listitem"><code class="literal">~N</code> after a word signifies edit distance (fuzziness)</li><li class="listitem"><code class="literal">~N</code> after a phrase signifies slop amount (the number of other words permitted between words)</li></ul></div><p>To use one of these characters literally, escape it with a preceding backslash
+                (<code class="literal">\</code>).
+            </p></span>
+</div>
+{% endblock %}
