@@ -8,9 +8,9 @@ from combio_app import models
 
 @admin.register(models.Record)
 class RecordAdmin(admin.ModelAdmin):
-    fields = ("id", "transcript", "metadata", "collection")
-    readonly_fields = ("id",)
-    list_display = ("id", "title", "collection", "metadata", "transcript")
+    fields = ("id", "metadata", "collection")
+    readonly_fields = ["id"]
+    list_display = ("id", "metadata")
     list_display_links = ("metadata",)
     search_fields = ("metadata",)
 
