@@ -41,6 +41,7 @@ module.exports = {
      */
     // '../../**/*.py'
   ],
+  safelist: ["bg-mpiwg-subdued-green"],
   theme: {
     fontFamily: {
       sans: [
