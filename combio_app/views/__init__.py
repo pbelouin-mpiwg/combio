@@ -47,7 +47,7 @@ class LandingView(TemplateView):
             metadata={
                 "combio": {
                     "title": "Boyz-n-the-Hood",
-                    "permalink": "https://www.youtube.com/watch?v=PWVNzYMyLTY",
+                    "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
                     "participants": [
                         {"name": "Pascal Belouin", "role": "interviewer"},
                         {"name": "Kim Pham", "role": "interviewee"},
@@ -69,7 +69,7 @@ class LandingView(TemplateView):
             metadata={
                 "combio": {
                     "title": "Medical ethics education in Britain, 1963-1993 : the transcript of a Witness Seminar held by the Wellcome Trust Centre for the History of Medicine at UCL, London.",
-                    "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
+                    "permalink": "https://youtu.be/PWVNzYMyLTY?t=92",
                     "participants": [
                         {"name": "Pascal Belouin", "role": "interviewer"},
                         {"name": "Kim Pham", "role": "interviewee"},

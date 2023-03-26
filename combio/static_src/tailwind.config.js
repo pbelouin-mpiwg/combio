@@ -43,7 +43,14 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ['"Apercu Pro"', "Helvetica", "Roboto", "Arial"],
+      sans: [
+        '"Open Sans"',
+        "Calibri",
+        '"Helvetica Now"',
+        "Helvetica",
+        "Roboto",
+        "Arial",
+      ],
       serif: ['"Sectra Book"', "Times", "Vollkorn"],
     },
     extend: {
