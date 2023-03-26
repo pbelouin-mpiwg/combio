@@ -3,6 +3,14 @@ from combio_app.models import Record, Collection
 import random
 
 
+def load_collections():
+    i = 0
+    while i < 4:
+        c = Collection(name=(random.sample(["SHI", "Wellcome Trust", "Queen Mary", "NIH"], 1))[0])
+        c.save()
+        i = i + 1
+
+
 def create_record(data, collection):
     r = Record(transcript=data["transcript"], metadata=data["metadata"])
     col = collection
@@ -10,11 +18,15 @@ def create_record(data, collection):
     r.save()
 
 
+def purge_collections():
+    Collection.objects.all().delete()
+
+
 def purge_records():
     Record.objects.all().delete()
 
 
-def load_data():
+def load_records():
     data1 = {
         "transcript": "Cruisin' down the street in my '64 Jockin' the freaks, clockin' the dough Went to the park to get the scoop Knuckleheads out there cold-shootin' some hoops A car pulls up, who can it be?A fresh El Camino rollin', Kilo GHe rolls down his window and he started to say 'It's all about makin' that GTA'",
         "metadata": {
@@ -63,11 +75,9 @@ def load_data():
         },
     }
 
-    collection1 = Collection.objects.all()[0]
-    collection2 = Collection.objects.all()[1]
     i = 0
     while i < 150:
-        create_record(random.sample([data1, data2], 1)[0], random.sample([collection1, collection2], 1)[0])
+        create_record(random.sample([data1, data2], 1)[0], random.sample(list(Collection.objects.all()), 1)[0])
         i = i + 1
 
 
@@ -76,5 +86,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         purge_records()
-        load_data()
+        purge_collections()
+        load_collections()
+        load_records()
         self.stdout.write(self.style.SUCCESS("Successfully loaded dummy data"))
