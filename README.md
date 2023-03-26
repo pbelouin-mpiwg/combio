@@ -66,6 +66,24 @@ poetry run python manage.py makemessages -l <language_code>
 
 ## Development
 
+Go in the web container by doing
+
+`docker exec -it web bash`
+
+You can then run the following commands.
+
+### CSS / Tailwind
+1. `python manage.py tailwind start` - starts the tailwind watcher, which recompiles the css file on every change
+2. `python manage.py collectstatic` - creates the static files, necessary to update the css file used by the templates
+
+### Elasticsearch Index update
+1. `python manage.py search_index --rebuild` - rebuilds the elasticsearch index
+
+### Create Superuser
+1. `python manage.py createsuperuser` - creates a super user, necessary to access the admin area at /admin
+
+### Make Commands
+
 Use the `Makefile` included for running different development tasks:
 
 1. `make install` - installs the packages needed for development.
@@ -82,6 +100,3 @@ Use the `Makefile` included for running different development tasks:
 12. `make dumpdata` - backup data.
 13. `make loaddata` - load data from backup.
 
-## Author
-
-[Ronie Martinez](mailto:ronmarti18@gmail.com)
