@@ -52,6 +52,7 @@ module.exports = {
         "Arial",
       ],
       serif: ['"Sectra Book"', "Times", "Vollkorn"],
+      mpiwg: ['"Apercu Pro"'],
     },
     extend: {
       colors: {

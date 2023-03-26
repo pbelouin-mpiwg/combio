@@ -52,7 +52,7 @@
       />
       <button
         v-on:click="submitForm();currentPage=1"
-        class="text-white absolute shadow-md shadow-inner right-2.5 bottom-2.5 bg-mpiwg-subdued-green hover:bg-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        class="text-white absolute shadow-md shadow-inner right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
       >
         Search
       </button>
@@ -115,32 +115,72 @@
           ></span
         >
         <a v-if="currentResult && currentResult.metadata"
-        class="text-white shadow-md shadow-inner float-right bg-mpiwg-subdued-green hover:bg-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        class="text-white shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
         :href="currentResult.metadata.combio.permalink" target="_blank"
         >
         Permalink
         </a>        
         <div class="bg-mpiwg-beige my-4 p-4 shadow-md shadow-inner rounded mt-6  border border-mpiwg-brown">
-          <div class="text-mpiwg-green text-xl mb-2">Metadata</div>
+          <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center"><i class="fa-solid fa-sm fa-tags mr-1"></i> Metadata</div>
           <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
-          <div class="text-lg" v-if="currentResult.interviewees">
-            <span class="text-mpiwg-green">Interviewees: </span>
-            <span> {{ currentResult.interviewees.join(", ") }} </span>
+          
+          <div class="grid grid-cols-12 w-full">
+            <div class="col-span-6 w-full">
+              <div class="text-lg font-bold text-mpiwg-green">Combio</div>
+              <div class="text-lg" v-if="currentResult.interviewees">
+                <span class="text-mpiwg-green">Interviewees: </span>
+                <span> {{ currentResult.interviewees.join(", ") }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.interviewers">
+                <span class="text-mpiwg-green ">Interviewers: </span>
+                <span> {{ currentResult.interviewers.join(", ") }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.participants">
+                <span class="text-mpiwg-green ">Participants: </span>
+                <span> {{ currentResult.participants.join(", ") }} </span>
+              </div>
           </div>
-          <div class="text-lg" v-if="currentResult.interviewers">
-            <span class="text-mpiwg-green ">Interviewers: </span>
-            <span> {{ currentResult.interviewers.join(", ") }} </span>
+            <div class="col-span-6 w-full">
+              <div class="text-lg font-bold text-mpiwg-green">Dublin Core</div>
+              <div class="text-lg" v-if="currentResult.metadata">
+                <span class="text-mpiwg-green">Date: </span>
+                <span> {{ currentResult.metadata.dc.date }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.interviewers">
+                <span class="text-mpiwg-green ">Description: </span>
+                <span> {{ currentResult.metadata.dc.description }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.participants">
+                <span class="text-mpiwg-green ">Publisher: </span>
+                <span> {{ currentResult.metadata.dc.publisher }} </span>
+              </div>
           </div>
-          <div class="text-lg" v-if="currentResult.participants">
-            <span class="text-mpiwg-green ">Participants: </span>
-            <span> {{ currentResult.participants.join(", ") }} </span>
+          <!--<div class="col-span-12 w-full">
+              <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
+              <div class="text-lg font-bold text-mpiwg-green">Other</div>
+              <div class="text-lg" v-if="currentResult.interviewees">
+                <span class="text-mpiwg-green">Date: </span>
+                <span> {{ currentResult.metadata.dc.date }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.interviewers">
+                <span class="text-mpiwg-green ">Description: </span>
+                <span> {{ currentResult.metadata.dc.description }} </span>
+              </div>
+              <div class="text-lg" v-if="currentResult.participants">
+                <span class="text-mpiwg-green ">Publisher: </span>
+                <span> {{ currentResult.metadata.dc.publisher }} </span>
+              </div>
+          </div>!-->
           </div>
+
         </div>
+
+
         <div class="bg-mpiwg-beige my-4 p-4 shadow-md shadow-inner rounded border border-mpiwg-brown" v-if="currentResult && currentResult.meta && currentResult.meta.highlight">
           <div
             class="text-lg"
           >
-            <div class="text-mpiwg-green text-xl mb-2">Hits</div>
+            <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center"><i class="fa-solid fa-sm fa-crosshairs mr-1"></i></i>Hits</div>
             <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
             <div v-for="(hits, key) in currentResult.meta.highlight" :key="key">
               <span class="text-mpiwg-green"
@@ -180,7 +220,7 @@
         :disabled="isInFirstPage"
         aria-label="Go to first page"
       >
-        |<
+        |&lt;
       </button>
     </li>
 
@@ -194,7 +234,7 @@
         aria-label="Go to previous page"
         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
       >
-        <
+        &lt;
       </button>
     </li>
 
@@ -220,7 +260,7 @@
         aria-label="Go to next page"
         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
       >
-        >
+        &gt;
       </button>
     </li>
 
@@ -232,7 +272,7 @@
         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
         aria-label="Go to last page"
       >
-        >|
+        &gt;|
       </button>
     </li>
   </ul>
