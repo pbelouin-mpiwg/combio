@@ -4,10 +4,8 @@
 {% load account %}
 
 {% block container %}
-    <div class="container-fluid">
-        <div class="row px-5" style="height: calc(100vh - 56px);">
-            <div class="col-lg-5 col-sm-12 justify-content-center align-self-center">
-                <h1 class="text-3xl text-mpiwg-green mb-6">{% translate "Confirm E-mail Address" %}</h1>
+    <div class="p-4">
+                <h1 class="text-3xl text-mpiwg-green mb-2">{% translate "Confirm E-mail Address" %}</h1>
 
                 {% if confirmation %}
 
@@ -30,9 +28,5 @@
                         <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
 
                 {% endif %}
-                <div class="col">
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}

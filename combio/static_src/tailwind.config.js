@@ -60,6 +60,8 @@ module.exports = {
         "mpiwg-subdued-green": "#739187",
         "mpiwg-light-green": "#50FA96",
         "mpiwg-brown": "#C3BEB9",
+        "mpiwg-blue": "#d5dbdf",
+        "mpiwg-yellow": "#ece7cf",
         "mpiwg-light-brown": "#fbfafa",
         "mpiwg-beige": "#e1e1dc",
         "vintage-salmon": "#FEF8EE",

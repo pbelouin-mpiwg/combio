@@ -1,25 +1,30 @@
-{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} {% block container %} {% block style %}
+{% extends "combio_app/base.html" %} {% load i18n %} {% load static %} 
+{% block container %} 
+{% block style %}
 <style>
   em {
     color: red;
   }
 
   .pagination {
-  list-style-type: none;
-}
+    list-style-type: none;
+  }
 
-.pagination-item {
-  display: inline-block;
-}
+  .pagination-item {
+    display: inline-block;
+  }
 
-.active {
-  background-color: #006464;
-  color: #ffffff;
-}
+  .active {
+    background-color: #006464;
+    color: #ffffff;
+  }
 </style>
-{% endblock %} {% verbatim %}
+{% endblock %} 
+{% verbatim %}
 <div class="grid grid-cols-12 h-5/6 w-full" id="app">
-  <div class="col-span-12 grid w-full p-6 bg-mpiwg-green border-b border-mpiwg-subdued-green">
+  <div
+    class="col-span-12 grid w-full p-6 bg-mpiwg-green border-b border-mpiwg-subdued-green"
+  >
     <div class="relative">
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -82,9 +87,14 @@
     </div>
   </div>
   <div
-    class="col-span-3 font-sans p-6 w-full bg-mpiwg-brown text-mpiwg-green" v-if="results.length > 0"
+    class="col-span-3 border-r border-mpiwg-beige font-sans p-6 w-full bg-mpiwg-brown text-mpiwg-green"
+    v-if="results.length > 0"
   >
-    <div v-if="total > 0" class="text-center text-lg p-2 bg-mpiwg-beige text-mpiwg-green mb-4 shadow-md shadow-inner rounded"><b>{{ total }}</b> results | Page <b>{{currentPage}}</b> of {{totalPages}}
+    <div
+      v-if="total > 0"
+      class="text-center text-lg p-2 bg-mpiwg-beige text-mpiwg-green mb-4 shadow-md shadow-inner rounded"
+    >
+      <b>{{ total }}</b> results | Page <b>{{currentPage}}</b> of {{totalPages}}
     </div>
     <!--<div class="w-full p-2 grid place-items-center bg-mpiwg-beige text-mpiwg-green mb-4 shadow-md shadow-inner rounded">
         <pagination
@@ -96,16 +106,24 @@
          @pagechanged="onPageChange"
         />
     </div>!-->
-    <div v-for="(result, index) in results" class="p-2 block" :class="{ 'bg-white text-mpiwg-green shadow-md shadow-inner rounded border border-mpiwg-beige': isCurrent(result) }" @click="setCurrent(result)" :key="result.id">
-      <a :href="'/records/'+result.id" target="_blank" class="underline font-semibold">
+    <div
+      v-for="(result, index) in results"
+      class="p-2 block"
+      :class="{ 'bg-white text-mpiwg-green shadow-md shadow-inner rounded border border-mpiwg-beige': isCurrent(result) }"
+      @click="setCurrent(result)"
+      :key="result.id"
+    >
+      <a
+        :href="'/records/'+result.id"
+        target="_blank"
+        class="underline font-semibold"
+      >
         {{result.title}}
       </a>
       <p class="font-light">{{result.collection.name}}</p>
     </div>
   </div>
-  <div
-    class="col-span-9 font-sans w-full bg-white p-6 pt-4"
-  >
+  <div class="col-span-9 font-sans w-full bg-white p-6 pt-4">
     <div v-if="currentResult">
       <div class="mb-4 mt-2">
         <span class="text-3xl text-mpiwg-green"
@@ -114,16 +132,25 @@
             >({{currentResult.collection.name}})</span
           ></span
         >
-        <a v-if="currentResult && currentResult.metadata"
-        class="text-white shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
-        :href="currentResult.metadata.combio.permalink" target="_blank"
+        <div
+          v-if="total > 0"
+          class="bg-mpiwg-blue my-4 p-4 shadow-md shadow-inner rounded mt-6 border border-mpiwg-brown"
         >
-        Permalink
-        </a>        
-        <div class="bg-mpiwg-beige my-4 p-4 shadow-md shadow-inner rounded mt-6  border border-mpiwg-brown">
-          <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center"><i class="fa-solid fa-sm fa-tags mr-1"></i> Metadata</div>
+          <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center">
+            <i class="fa-solid fa-sm fa-tags mr-1"></i> Metadata
+          </div>
+          <a
+            v-if="currentResult && currentResult.metadata"
+            class="inline-flex items-center text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+            style="margin-top: -4px"
+            :href="currentResult.metadata.combio.permalink"
+            target="_blank"
+          >
+            <i class="fa-solid fa-xs fa-arrow-up-right-from-square mr-2"></i>
+            Permalink
+          </a>
           <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
-          
+
           <div class="grid grid-cols-12 w-full">
             <div class="col-span-6 w-full">
               <div class="text-lg font-bold text-mpiwg-green">Combio</div>
@@ -132,14 +159,14 @@
                 <span> {{ currentResult.interviewees.join(", ") }} </span>
               </div>
               <div class="text-lg" v-if="currentResult.interviewers">
-                <span class="text-mpiwg-green ">Interviewers: </span>
+                <span class="text-mpiwg-green">Interviewers: </span>
                 <span> {{ currentResult.interviewers.join(", ") }} </span>
               </div>
               <div class="text-lg" v-if="currentResult.participants">
-                <span class="text-mpiwg-green ">Participants: </span>
+                <span class="text-mpiwg-green">Participants: </span>
                 <span> {{ currentResult.participants.join(", ") }} </span>
               </div>
-          </div>
+            </div>
             <div class="col-span-6 w-full">
               <div class="text-lg font-bold text-mpiwg-green">Dublin Core</div>
               <div class="text-lg" v-if="currentResult.metadata">
@@ -147,15 +174,15 @@
                 <span> {{ currentResult.metadata.dc.date }} </span>
               </div>
               <div class="text-lg" v-if="currentResult.interviewers">
-                <span class="text-mpiwg-green ">Description: </span>
+                <span class="text-mpiwg-green">Description: </span>
                 <span> {{ currentResult.metadata.dc.description }} </span>
               </div>
               <div class="text-lg" v-if="currentResult.participants">
-                <span class="text-mpiwg-green ">Publisher: </span>
+                <span class="text-mpiwg-green">Publisher: </span>
                 <span> {{ currentResult.metadata.dc.publisher }} </span>
               </div>
-          </div>
-          <!--<div class="col-span-12 w-full">
+            </div>
+            <!--<div class="col-span-12 w-full">
               <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
               <div class="text-lg font-bold text-mpiwg-green">Other</div>
               <div class="text-lg" v-if="currentResult.interviewees">
@@ -172,114 +199,118 @@
               </div>
           </div>!-->
           </div>
-
         </div>
 
-
-        <div class="bg-mpiwg-beige my-4 p-4 shadow-md shadow-inner rounded border border-mpiwg-brown" v-if="currentResult && currentResult.meta && currentResult.meta.highlight">
-          <div
-            class="text-lg"
-          >
-            <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center"><i class="fa-solid fa-sm fa-crosshairs mr-1"></i></i>Hits</div>
+        <div
+          class="bg-mpiwg-beige my-4 p-4 shadow-md shadow-inner rounded border border-mpiwg-brown"
+          v-if="currentResult && currentResult.meta && currentResult.meta.highlight"
+        >
+          <div class="text-lg">
+            <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center">
+              <i class="fa-solid fa-sm fa-crosshairs mr-1"></i>Hits
+            </div>
             <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
             <div v-for="(hits, key) in currentResult.meta.highlight" :key="key">
-              <span class="text-mpiwg-green"
-                >In {{ key }}:&nbsp;</span
-              >
+              <span class="text-mpiwg-green">In {{ key }}:&nbsp;</span>
               <span v-html="hits.join(' ... ')"></span>
-              <br/>
+              <br />
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-    <div class="col-span-12 w-full grid place-items-center text-mpiwg-green text-2xl" v-if="results.length == 0">No Results Found. Please try another search!</div>
-    <div class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green" v-if="results.length > 0">
+  </div>
+  <div
+    class="col-span-12 w-full grid place-items-center text-mpiwg-green text-2xl"
+    v-if="results.length == 0"
+  >
+    No Results Found. Please try another search!
+  </div>
+  <div
+    class="p-4 col-span-12 grid place-items-center bg-mpiwg-subdued-green border-t border-mpiwg-green"
+    v-if="results.length > 0"
+  >
     <pagination
-       v-if="total > perPage"
-       :total-pages="totalPages"
-       :total="total"
-       :per-page="perPage"
-       :current-page="currentPage"
-       @pagechanged="onPageChange"
+      v-if="total > perPage"
+      :total-pages="totalPages"
+      :total="total"
+      :per-page="perPage"
+      :current-page="currentPage"
+      @pagechanged="onPageChange"
     />
-    </div>
   </div>
 </div>
-</div>
 <script type="text/x-template" id="pagination">
- <ul class="pagination">
-    <li 
-      class="pagination-item"
-    >
-      <button 
-        type="button" 
-        class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700"
-        @click="onClickFirstPage"
-        :disabled="isInFirstPage"
-        aria-label="Go to first page"
-      >
-        |&lt;
-      </button>
-    </li>
+  <ul class="pagination">
+     <li
+       class="pagination-item"
+     >
+       <button
+         type="button"
+         class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700"
+         @click="onClickFirstPage"
+         :disabled="isInFirstPage"
+         aria-label="Go to first page"
+       >
+         |&lt;
+       </button>
+     </li>
 
-    <li
-      class="pagination-item"
-    >
-      <button 
-        type="button" 
-        @click="onClickPreviousPage"
-        :disabled="isInFirstPage"
-        aria-label="Go to previous page"
-        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-      >
-        &lt;
-      </button>
-    </li>
+     <li
+       class="pagination-item"
+     >
+       <button
+         type="button"
+         @click="onClickPreviousPage"
+         :disabled="isInFirstPage"
+         aria-label="Go to previous page"
+         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+       >
+         &lt;
+       </button>
+     </li>
 
-    <li v-for="page in pages" class="pagination-item">
-      <button 
-        type="button" 
-        @click="onClickPage(page.name)"
-        :disabled="page.isDisabled"
-        :class="{ active: isPageActive(page.name) }"
-        :aria-label="`Go to page number ${page.name}`"
-        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-        
-      >
-        {{ page.name }}
-      </button>
-    </li>
+     <li v-for="page in pages" class="pagination-item">
+       <button
+         type="button"
+         @click="onClickPage(page.name)"
+         :disabled="page.isDisabled"
+         :class="{ active: isPageActive(page.name) }"
+         :aria-label="`Go to page number ${page.name}`"
+         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
 
-    <li class="pagination-item">
-      <button 
-        type="button" 
-        @click="onClickNextPage"
-        :disabled="isInLastPage"
-        aria-label="Go to next page"
-        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-      >
-        &gt;
-      </button>
-    </li>
+       >
+         {{ page.name }}
+       </button>
+     </li>
 
-    <li class="pagination-item">
-      <button 
-        type="button" 
-        @click="onClickLastPage"
-        :disabled="isInLastPage"
-        class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
-        aria-label="Go to last page"
-      >
-        &gt;|
-      </button>
-    </li>
-  </ul>
+     <li class="pagination-item">
+       <button
+         type="button"
+         @click="onClickNextPage"
+         :disabled="isInLastPage"
+         aria-label="Go to next page"
+         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+       >
+         &gt;
+       </button>
+     </li>
+
+     <li class="pagination-item">
+       <button
+         type="button"
+         @click="onClickLastPage"
+         :disabled="isInLastPage"
+         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
+         aria-label="Go to last page"
+       >
+         &gt;|
+       </button>
+     </li>
+   </ul>
 </script>
-<script src="/static/combio_app/js/pagination.js" ></script>
+<script src="/static/combio_app/js/pagination.js"></script>
 <script>
-
   const app = Vue.createApp({
     components: {
       pagination: Pagination,
@@ -289,7 +320,7 @@
         objects: {},
         total: 0,
         currentPage: 1,
-        perPage: 15,
+        perPage: 10,
         results: [],
         currentResult: {},
         collections: [],
@@ -297,27 +328,27 @@
       };
     },
     computed: {
-        totalPages() {
-        return parseInt(this.total / this.perPage)
-      }
+      totalPages() {
+        return parseInt(this.total / this.perPage);
+      },
     },
     methods: {
-      setCurrent(result){
+      setCurrent(result) {
         this.currentResult = result;
         //var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?current='+result.id;
         //window.history.pushState({path:newurl},'',newurl);
       },
       isCurrent(result) {
-        if(this.currentResult){
-          return (result.id == this.currentResult.id)
-        }else {
-          return false
+        if (this.currentResult) {
+          return result.id == this.currentResult.id;
+        } else {
+          return false;
         }
       },
       onPageChange(page) {
-      this.currentPage = page;
-      this.submitForm()
-    },
+        this.currentPage = page;
+        this.submitForm();
+      },
       selectAll() {
         this.$refs.input.select();
       },
@@ -325,47 +356,51 @@
         let selectedCollections = this.collections.filter(
           (element) => element.checked
         );
-        let params = { q: this.q, c: selectedCollections.map((c) => c.pk), per_page: this.perPage, page: this.currentPage };
-        await axios
-          .get("/api/search", { params })
-          .then((response) => {
-            this.results = response["data"]["results"];
-            this.total = response["data"]["results_count"] 
-          });
+        let params = {
+          q: this.q,
+          c: selectedCollections.map((c) => c.pk),
+          per_page: this.perPage,
+          page: this.currentPage,
+        };
+        await axios.get("/api/search", { params }).then((response) => {
+          this.results = response["data"]["results"];
+          this.total = response["data"]["results_count"];
+        });
         this.currentResult = this.results[0];
       },
     },
     created() {
-        window.addEventListener("keydown", (e) => {
-          if (e.key == "ArrowLeft" && this.currentPage != 1) {
-            e.preventDefault();
-            this.onPageChange(this.currentPage - 1);
-          }
-          if (
-            e.key == "ArrowRight" &&
-            this.currentPage < this.totalPages
-          ) {
-            e.preventDefault();
-            this.onPageChange(this.currentPage + 1);
-          }
-          if (
-            e.key == "ArrowUp" &&
-            this.currentResult &&
-            this.currentResult.index > 0
-          ) {
-            e.preventDefault();
-            this.setCurrent(this.results.find(r => r.index == (this.currentResult.index - 1)))
-          }
-           if (
-            e.key == "ArrowDown" &&
-            this.currentResult &&
-            this.total > 1 &&
-            this.currentResult.index < (this.perPage - 1)
-          ) {
-            e.preventDefault();
-            this.setCurrent(this.results.find(r => r.index == (this.currentResult.index + 1)))
-          }
-        });
+      window.addEventListener("keydown", (e) => {
+        if (e.key == "ArrowLeft" && this.currentPage != 1) {
+          e.preventDefault();
+          this.onPageChange(this.currentPage - 1);
+        }
+        if (e.key == "ArrowRight" && this.currentPage < this.totalPages) {
+          e.preventDefault();
+          this.onPageChange(this.currentPage + 1);
+        }
+        if (
+          e.key == "ArrowUp" &&
+          this.currentResult &&
+          this.currentResult.index > 0
+        ) {
+          e.preventDefault();
+          this.setCurrent(
+            this.results.find((r) => r.index == this.currentResult.index - 1)
+          );
+        }
+        if (
+          e.key == "ArrowDown" &&
+          this.currentResult &&
+          this.total > 1 &&
+          this.currentResult.index < this.perPage - 1
+        ) {
+          e.preventDefault();
+          this.setCurrent(
+            this.results.find((r) => r.index == this.currentResult.index + 1)
+          );
+        }
+      });
     },
     async mounted() {
       axios.get("/api/collections").then(async (response) => {
@@ -378,4 +413,5 @@
     },
   }).mount("#app");
 </script>
-{% endverbatim %} {% endblock container %}
+{% endverbatim %} 
+{% endblock container %}

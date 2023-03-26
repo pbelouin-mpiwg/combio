@@ -1,0 +1,68 @@
+[
+  {
+    "combio": {
+      "transcript": "Today's a good day to die! (lady screaming) Bow wow wow yippie yo yeppie yah Suck on these nuts nigga suck on these nuts I tell em bow wow wow yippie yo yeppie yea Suck on these nuts nigga suck on these nuts Ain't nuthin but Eazy baby He'll smoke two niggas 'cause they crazy Talk a gang of shit but it don't phase me That punk nigga Dre still pays me",
+      "title": "Another title for an interview",
+      "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
+      "participants": [
+        { "name": "Pascal Belouin", "role": "interviewer" },
+        { "name": "Christoph Londat", "role": "interviewee" },
+        { "name": "Joe Briggs", "role": "interviewee" },
+        { "name": "Bob Noreen", "role": "interviewer" },
+        { "name": "Julia Benis", "role": "interviewee" }
+      ]
+    },
+    "dc": {
+      "subject": "Cardiology",
+      "description": "This is a description",
+      "publisher": "This is the publisher",
+      "date": "2019-04-12"
+    },
+    "other": { "a_field": "some stuff", "another_field": "some other stuff" }
+  },
+  {
+    "combio": {
+      "transcript": "Cruisin' down the street in my '64 Jockin' the freaks, clockin' the dough Went to the park to get the scoop Knuckleheads out there cold-shootin' some hoops A car pulls up, who can it be?A fresh El Camino rollin', Kilo GHe rolls down his window and he started to say 'It's all about makin' that GTA'",
+      "title": "This is an example of an interview conducted by yours truly",
+      "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
+      "participants": [
+        { "name": "Pascal Belouin", "role": "interviewer" },
+        { "name": "Kim Pham", "role": "interviewee" },
+        { "name": "Michael Winter", "role": "interviewee" },
+        { "name": "Calvin Yeh", "role": "participant" },
+        { "name": "Hassan El Hajj", "role": "participant" }
+      ]
+    },
+    "dc": {
+      "subject": "Biomedicine",
+      "description": "This is a description",
+      "publisher": "This is the publisher",
+      "date": "2019-04-12"
+    },
+    "other": { "a_field": "some stuff", "another_field": "some other stuff" }
+  },
+  {
+    "combio": {
+      "transcript": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+      "title": "Medical ethics education in Britain, 1963-1993 : the transcript of a Witness Seminar held by the Wellcome Trust Centre for the History of Medicine at UCL, London.",
+      "permalink": "https://www.youtube.com/watch?v=DsZOnZWpgNY",
+      "participants": [
+        { "name": "Patrick Bateman", "role": "interviewer" },
+        { "name": "Bob Loblow", "role": "interviewee" },
+        { "name": "Linda Brites", "role": "interviewee" },
+        { "name": "Robert Casties", "role": "participant" },
+        { "name": "Catherine Bloos", "role": "interviewer" }
+      ]
+    },
+    "dc": {
+      "subject": "Psychology",
+      "description": "This is a long description",
+      "publisher": "This is the publisher of this thing",
+      "date": "2017-02-12"
+    },
+    "other": {
+      "a_nother_field": "some more stuff",
+      "another_metadata_field": "some more other stuff"
+    }
+  }
+]

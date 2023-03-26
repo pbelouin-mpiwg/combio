@@ -8,25 +8,29 @@ class RecordDocument(Document):
     collection = fields.ObjectField(properties={"pk": fields.KeywordField(), "name": fields.TextField()})
     metadata = fields.NestedField()
     title = fields.TextField()
+    transcript = fields.TextField()
     permalink = fields.TextField()
     interviewers = fields.ListField(fields.TextField())
     interviewees = fields.ListField(fields.TextField())
     participants = fields.ListField(fields.TextField())
 
+    def prepare_transcript(self, instance):
+        return instance.metadata["combio"]["transcript"]
+
+    def prepare_title(self, instance):
+        return instance.metadata["combio"]["title"]
+
     def prepare_metadata(self, instance):
         return instance.metadata
 
     def prepare_interviewers(self, instance):
-        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "interviewer"]
+        return instance.interviewers()
 
     def prepare_interviewees(self, instance):
-        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "interviewee"]
+        return instance.interviewees()
 
     def prepare_participants(self, instance):
-        return [p["name"] for p in instance.metadata["combio"]["participants"] if p["role"] == "participant"]
-
-    def prepare_title(self, instance):
-        return instance.metadata["combio"]["title"]
+        return instance.participants()
 
     class Index:
         # Name of the Elasticsearch index
@@ -38,7 +42,7 @@ class RecordDocument(Document):
         model = Record  # The model associated with this Document
 
         # The fields of the model you want to be indexed in Elasticsearch
-        fields = ["id", "transcript"]
+        fields = ["id"]
         related_models = [Collection]
 
     def get_queryset(self):

@@ -1,7 +1,7 @@
 version: "3.8"
 
 volumes:
-  database:
+  pg_data:
   es_data: {}
 services:
   database:
@@ -14,7 +14,7 @@ services:
       - 5432
     volumes:
       - ./database/scripts:/docker-entrypoint-initdb.d
-      - database:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]  # TODO: find a way to dynamically get the username
       interval: 10s

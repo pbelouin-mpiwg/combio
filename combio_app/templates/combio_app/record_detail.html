@@ -2,29 +2,68 @@
 {% load i18n %}
 {% load static %}]
 {% block container %}
-  <div class="col-span-9 font-serif w-full bg-mpiwg-beige max-h-fit h-screen p-4">
-        <div class="mb-4">
-          <span class="text-3xl text-mpiwg-green">{{record.title}}</span>
+  <div class="col-span-9 w-full max-h-fit h-screen p-4">
+<div v-if="record">
+      <div class="mb-4 mt-2">
+        <span class="text-3xl text-mpiwg-green"
+          >{{record.title}}
+          <span v-if="record && record.collection"
+            >({{record.collection.name}})</span
+          ></span
+        >
+        <div
+          v-if="total > 0"
+          class="bg-mpiwg-blue my-4 p-4 shadow-md shadow-inner rounded mt-6 border border-mpiwg-brown"
+        >
+          <div class="text-mpiwg-green text-xl mb-2 inline-flex items-center">
+            <i class="fa-solid fa-sm fa-tags mr-1"></i> Metadata
+          </div>
+          <a
+            v-if="record && record.metadata"
+            class="inline-flex items-center text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+            style="margin-top: -4px"
+            :href="record.metadata.combio.permalink"
+            target="_blank"
+          >
+            <i class="fa-solid fa-xs fa-arrow-up-right-from-square mr-2"></i>
+            Permalink
+          </a>
+          <hr class="bg-mpiwg-subdued-green border-0 h-px my-2" />
+
+          <div class="grid grid-cols-12 w-full">
+            <div class="col-span-6 w-full">
+              <div class="text-lg font-bold text-mpiwg-green">Combio</div>
+              <div class="text-lg" v-if="record.interviewees">
+                <span class="text-mpiwg-green">Interviewees: </span>
+                <span> {{ record.interviewees|join:", " }} </span>
+              </div>
+              <div class="text-lg" v-if="record.interviewers">
+                <span class="text-mpiwg-green">Interviewers: </span>
+                <span> {{ record.interviewers|join:", " }} </span>
+              </div>
+              <div class="text-lg" v-if="record.participants">
+                <span class="text-mpiwg-green">Participants: </span>
+                <span> {{ record.participants|join:", " }} </span>
+              </div>
+            </div>
+            <div class="col-span-6 w-full">
+              <div class="text-lg font-bold text-mpiwg-green">Dublin Core</div>
+              <div class="text-lg" v-if="record.metadata">
+                <span class="text-mpiwg-green">Date: </span>
+                <span> {{ record.metadata.dc.date }} </span>
+              </div>
+              <div class="text-lg" v-if="record.interviewers">
+                <span class="text-mpiwg-green">Description: </span>
+                <span> {{ record.metadata.dc.description }} </span>
+              </div>
+              <div class="text-lg" v-if="record.participants">
+                <span class="text-mpiwg-green">Publisher: </span>
+                <span> {{ record.metadata.dc.publisher }} </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="text-lg text-mpiwg-green">
-          <span class="font-bold">Interviewees:</span>
-          <span>
-                {{ record.interviewees|join:", " }}
-          </span>
-        </div>
-        <div class="text-lg text-mpiwg-green">
-        <span class="font-bold">Interviewers:</span>
-           <span>
-                {{ record.interviewers|join:", " }}
-           </span>
-        </div>
-        <div class="text-lg text-mpiwg-green">
-          <span class="font-bold">Participants:</span> 
-          <span>
-                {{ record.participants|join:", " }}
-          </span>
-        </div>
-        <div>
-        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
