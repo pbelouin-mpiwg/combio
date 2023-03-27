@@ -1,0 +1,9 @@
+{% extends "combio_app/base.html" %}
+{% load i18n %}
+{% load django_jsonform %}
+{% load static %}
+{% block container %}
+  <div class="col-span-9 w-full max-h-fit h-screen p-4">
+    {{ metadata_form }}
+  </div>
+{% endblock %}

@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.utils.functional import LazyObject
 from pprint import pprint
 from jsonview.views import JsonView
+from ..forms import MetadataForm
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -178,4 +179,18 @@ class ShowRecord(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class CreateRecord(TemplateView):
+    template_name = "combio_app/record_create.html"
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["nbar"] = "create_record"
+        context["metadata_form"] = MetadataForm()
         return context

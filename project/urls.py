@@ -28,6 +28,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("__reload__/", include("django_browser_reload.urls")),
     path("records/", combio_app.views.ShowRecords.as_view(), name="records"),
+    path("create_record/", combio_app.views.CreateRecord.as_view(), name="create_record"),
     path("search/", combio_app.views.ShowSearch.as_view(), name="search"),
     path("help/", combio_app.views.ShowHelp.as_view(), name="help"),
     path("api/search/", json_view(combio_app.views.Search.as_view()), name="api_search"),

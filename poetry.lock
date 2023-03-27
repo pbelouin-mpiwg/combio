@@ -535,6 +535,21 @@ elasticsearch-dsl = ">=7.2.0,<8.0.0"
 six = "*"
 
 [[package]]
+name = "django-jsonform"
+version = "2.16.0"
+description = "A user-friendly JSON editing form for Django admin."
+category = "main"
+optional = false
+python-versions = ">=3.4"
+files = [
+    {file = "django-jsonform-2.16.0.tar.gz", hash = "sha256:0a4d5180fe56673cd7256acb3f0962cd35bc7c43723b46fd588801d06c135875"},
+    {file = "django_jsonform-2.16.0-py3-none-any.whl", hash = "sha256:f36fcc660223ff5bfa9f8941465b7524818e817b6852a3c80c6881ff7adb9595"},
+]
+
+[package.dependencies]
+django = ">=2.0"
+
+[[package]]
 name = "django-jsonview"
 version = "2.0.0"
 description = "Always return JSON from your Django view."
@@ -1919,4 +1934,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "f705ab2d831a481ac0d9ecb958f870c4f29c12d47f738692abb5b05652f6195a"
+content-hash = "ea7ae36ae08a33a2c34690ae16faea63a1398c1d7e652273a90972134f1c3d39"

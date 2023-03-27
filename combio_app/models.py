@@ -1,7 +1,18 @@
-from django.db.models import JSONField
+# from django.db.models import JSONField
 from django.db import models
 from django.db.models import Count
 from django.contrib.auth.models import User
+import json
+import os
+from pathlib import Path
+from django_jsonform.models.fields import JSONField
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(
+    os.path.join(BASE_DIR, "combio_app") + "/static/combio_app/json/combio_metadata_scheme.json", encoding="utf-8"
+) as schema_file:
+    metadata_schema = json.loads(schema_file.read())
 
 
 def get_default_data():
@@ -19,7 +30,7 @@ class Collection(models.Model):
 
 
 class Record(models.Model):
-    metadata = JSONField(null=True)
+    metadata = JSONField(schema=metadata_schema)
 
     class Meta:
         ordering = ["pk"]
@@ -42,5 +53,4 @@ class Record(models.Model):
     def participants(self):
         return [p["name"] for p in self.metadata["combio"]["participants"] if p["role"] == "participant"]
 
-    metadata = JSONField(default=get_default_data)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)

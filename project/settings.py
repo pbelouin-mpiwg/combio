@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "django_jsonform",
     "fontawesomefree",
     "tailwind",
     "combio",

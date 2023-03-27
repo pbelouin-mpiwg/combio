@@ -1,6 +1,7 @@
 {% extends "combio_app/base.html" %}
 {% load i18n %}
-{% load static %}]
+{% load django_jsonform %}
+{% load static %}
 {% block container %}
   <div class="col-span-9 w-full max-h-fit h-screen p-4">
 <div v-if="record">
@@ -50,7 +51,7 @@
               <div class="text-lg font-bold text-mpiwg-green">Dublin Core</div>
               <div class="text-lg" v-if="record.metadata">
                 <span class="text-mpiwg-green">Date: </span>
-                <span> {{ record.metadata.dc.date }} </span>
+                <span> {{ record.metadata.dc.date | parse_datetime | date:'d M, Y' }} </span>
               </div>
               <div class="text-lg" v-if="record.interviewers">
                 <span class="text-mpiwg-green">Description: </span>
