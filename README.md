@@ -68,7 +68,7 @@ poetry run python manage.py makemessages -l <language_code>
 
 Go in the web container by doing
 
-`docker exec -it web bash`
+`docker exec -it combio_web bash`
 
 You can then run the following commands.
 

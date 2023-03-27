@@ -73,7 +73,7 @@ ROOT_URLCONF = "project.urls"
 TAILWIND_APP_NAME = "combio"
 
 ELASTICSEARCH_DSL = {
-    "default": {"hosts": "elastic:elastic@es:9200"},
+    "default": {"hosts": "elastic:elastic@combio_es:9200"},
 }
 
 TEMPLATES = [

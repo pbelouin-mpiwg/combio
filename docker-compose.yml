@@ -6,7 +6,7 @@ volumes:
 services:
   database:
     image: library/postgres:14-alpine
-    container_name: docker-django-database
+    container_name: combio_db
     restart: on-failure
     env_file:
       - env/database.env
@@ -22,7 +22,7 @@ services:
       retries: 5
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
-    container_name: es
+    container_name: combio_es
     environment:
       - discovery.type=single-node
       - ELASTIC_USERNAME=elastic
@@ -33,13 +33,14 @@ services:
       - 9200:9200
   web:
     build: .
-    container_name: web
-    image: docker-django-app
+    container_name: combio_web
+    image: combio_web
     command:
       - /bin/sh
       - -c
       - |
         python manage.py compilemessages
+        python manage.py makemigrations
         python manage.py migrate
         python manage.py collectstatic --noinput
         bash runserver.sh
@@ -61,7 +62,7 @@ services:
 
   nginx:
     image: library/nginx:latest
-    container_name: docker-django-nginx
+    container_name: combio_nginx
     ports:
       - "127.0.0.1:8081:8081"
     volumes:
