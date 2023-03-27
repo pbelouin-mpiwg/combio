@@ -7,7 +7,6 @@ from django.core.paginator import Paginator
 from django.utils.functional import LazyObject
 from pprint import pprint
 from jsonview.views import JsonView
-from ..forms import MetadataForm
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
