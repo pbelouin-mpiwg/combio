@@ -52,7 +52,7 @@
         v-model="q"
         type="search"
         id="default-search"
-        class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
+        class="w-full p-4 pl-10 text-gray-900 border border-gray-300 rounded bg-gray-50 focus:ring-mpiwg-green focus:border-mpiwg-green"
         placeholder="Search Oral Histories"
         @change="submitForm();currentPage=1"
         @focus="searchFocus=true"
@@ -61,7 +61,7 @@
       />
       <button
         v-on:click="submitForm();currentPage=1"
-        class="text-white absolute shadow-md shadow-inner right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+        class="text-white absolute shadow-md shadow-inner right-2.5 bottom-2.5 bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded text-sm px-4 py-2"
       >
         Search
       </button>
@@ -145,7 +145,7 @@
           </div>
           <a
             v-if="currentResult && currentResult.metadata"
-            class="inline-flex items-center text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded-lg text-sm px-4 py-2"
+            class="inline-flex items-center text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded text-sm px-4 py-2"
             style="margin-top: -4px"
             :href="currentResult.metadata.combio.permalink"
             target="_blank"
@@ -251,7 +251,7 @@
      >
        <button
          type="button"
-         class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700"
+         class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 hover:text-gray-700"
          @click="onClickFirstPage"
          :disabled="isInFirstPage"
          aria-label="Go to first page"
