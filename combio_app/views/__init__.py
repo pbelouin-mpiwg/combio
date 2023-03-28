@@ -115,7 +115,7 @@ class Search(JsonView):
             s = s.filter(
                 SimpleQueryString(
                     query=self.q,
-                    fields=["transcript", "interviewers", "interviewees", "participants"],
+                    fields=["title", "transcript", "interviewers", "interviewees", "participants"],
                     default_operator="and",
                 )
             )
