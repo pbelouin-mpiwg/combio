@@ -25,6 +25,7 @@ services:
     container_name: combio_es
     environment:
       - discovery.type=single-node
+      - xpack.security.http.ssl.enabled=false
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=elastic
     volumes:
