@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "combio": {
+      "type": "object",
+      "properties": {
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "enum": ["interviewer", "interviewee", "participant"]
+              }
+            }
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "transcript": {
+          "type": "string",
+          "widget": "textarea"
+        }
+      }
+    },
+    "dc": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "title": "combio_metadata_scheme"
+}
