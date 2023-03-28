@@ -112,19 +112,20 @@
     </div>!-->
     <div
       v-for="(result, index) in results"
-      class="p-2 block"
-      :class="{ 'bg-white text-mpiwg-green shadow-md shadow-inner rounded border border-mpiwg-beige': isCurrent(result) }"
+      class="p-4 mb-2 block cursor-pointer font-semibold hover:bg-mpiwg-beige border border-mpiwg-brown hover:text-mpiwg-green hover:shadow-md hover:shadow-inner hover:rounded hover:border hover:border-mpiwg-beige"
+      :class="{ 'bg-white hover:bg-white cursor-pointer text-mpiwg-green shadow-md shadow-inner rounded border border-mpiwg-beige': isCurrent(result) }"
       @click="setCurrent(result)"
       :key="result.id"
     >
+       <span class="mr-2"> {{ result.title }}</span>
       <a
         :href="'/records/'+result.id"
         target="_blank"
-        class="underline font-semibold"
+        class="hover:text-mpiwg-light-green"
       >
-        {{result.title}}
+      <i class="fa-solid fa-link p-1 fa-xs hover:text-mpiwg-light-green"></i>
       </a>
-      <p class="font-light">{{result.collection.name}}</p>
+      <p class="font-light">{{ result.collection.name }}</p>
     </div>
   </div>
   <div class="col-span-9 font-sans w-full bg-white p-6 pt-4">
