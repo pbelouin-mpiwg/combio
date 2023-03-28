@@ -119,6 +119,7 @@ class Search(JsonView):
                     default_operator="and",
                 )
             )
+            s = s.highlight("title", number_of_fragments=0)
             s = s.highlight("transcript", number_of_fragments=20, fragment_size=40)
             s = s.highlight("interviewers", number_of_fragments=0)
             s = s.highlight("interviewees", number_of_fragments=0)
