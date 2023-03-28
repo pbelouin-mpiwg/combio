@@ -10,7 +10,6 @@ RUN apt-get -y install nodejs
 RUN npm install
 RUN npm i -g n
 RUN n latest
-RUN python manage.py tailwind install
 
 ENV PYTHONUNBUFFERED=1
 ENV TAILWIND_CSS_PATH=/code/static/
