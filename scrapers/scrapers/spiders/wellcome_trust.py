@@ -1,14 +1,61 @@
+from urllib.parse import urljoin
 import scrapy
-from combio_app.models import Record
+from scrapy.http import Request
+from collections import defaultdict
+
+import os
+from dataclasses import dataclass, field
+from typing import Any, Callable
+
+# from pdfminer.high_level import extract_text
+
+# from rich.progress import track
+# from spacy.tokens import Doc, Token, Span
+
+# from spacypdfreader.console import console
+# from spacypdfreader.parsers import pdfminer
+# from spacypdfreader.parsers.base import BaseParser
+# from spacypdfreader._utils import _filter_doc_by_page, _get_number_of_pages
+# import spacy
+# from spacypdfreader import pdf_reader
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 
-class WellcomeTrustSpider(scrapy.Spider):
-    # records model from Django
-    print(Record.objects.all())
+# nlp = spacy.load("en_core_web_sm")
+
+"""
+def pdf_to_str(
+    pdf_path: str,
+    pdf_parser: BaseParser = pdfminer.PdfminerParser,
+    verbose: bool = False,
+    **kwargs: Any,
+) -> str:
+    if verbose:
+        console.print(f"PDF to text engine: [blue bold]{pdf_parser.name}[/]...")
+
+    pdf_path = os.path.normpath(pdf_path)
+    num_pages = _get_number_of_pages(pdf_path)
+
+    # Convert pdf to text.
+    if verbose:
+        console.print(f"Extracting text from {num_pages} pdf pages...")
+    texts = ""
+    for page_num in range(1, num_pages + 1):
+        parser = pdf_parser(pdf_path, page_num)
+        text = parser.pdf_to_text(**kwargs)
+        texts = texts + " " + text;
+
+    return texts
+"""
+
+
+class Wellcome_Trust_Spider(scrapy.Spider):
     name = "wellcome_trust"
-    allowed_domains = ["qmro.qmul.ac.uk"]
+
     start_urls = [
-        "https://qmro.qmul.ac.uk/xmlui/handle/123456789/12359/browse?rpp=100&sort_by=2&type=dateissued&offset=0&etal=-1&order=ASC"
+        "https://api.wellcomecollection.org/catalogue/v2/works?partOf.title=Wellcome+witnesses+to+twentieth+century+medicine&pageSize=52"
     ]
 
     def parse(self, response):
@@ -98,3 +145,21 @@ class WellcomeTrustSpider(scrapy.Spider):
                 pdfURL = elem["@id"]
                 if pdfURL.split(".")[-1] == "pdf":
                     yield scrapy.Request(pdfURL, callback=self.save_pdf, cb_kwargs={"item": item})
+
+    def save_pdf(self, response, item):
+        # response.css("tr.ds-table-row"):
+        path = "wellcome_trust_pdfs/" + response.url.split("/")[-1]
+        print(path)
+        self.logger.info("Saving PDF %s", path)
+        # name = path.split('?')[0].replace('%20', '_').replace('%2C', '')
+        with open(path, "wb") as f:
+            f.write(response.body)
+
+        # doc = pdf_reader(path, nlp);
+        # item['transcript_text'] = doc.text;
+
+        # item['transcript_text'] = pdf_to_str(path);
+
+        item["transcript_text"] = textract.process(path)
+
+        yield item

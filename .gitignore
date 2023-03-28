@@ -146,3 +146,5 @@ static/*
 
 # Postgres
 data/
+
+!combio_app/static/combio_app/json/combio_metadata_scheme.json

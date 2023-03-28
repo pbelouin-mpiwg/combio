@@ -8,30 +8,37 @@ from combio_app.models import Record
 class QueenMarySpider(scrapy.Spider):
     name = "queen_mary"
 
-    start_urls = [
-        "https://qmro.qmul.ac.uk/xmlui/handle/123456789/12359/browse?rpp=100&sort_by=2&type=dateissued&offset=0&etal=-1&order=ASC"
-    ]
+    custom_settings = {
+        "ITEM_PIPELINES": {
+            "scrapers.pipelines.ComBioScrapersPipeline": 300,
+        }
+    }
+
+    def start_requests(self):
+        urls = [
+            "https://qmro.qmul.ac.uk/xmlui/handle/123456789/12359/browse?rpp=100&sort_by=2&type=dateissued&offset=0&etal=-1&order=ASC"
+        ]
+
+        for url in urls:
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        # products = response.xpath("//*[contains(@class, 'ph-summary-entry-ctn')]/a/@href").extract()
+        print(response.css)
         histories = response.css("div.artifact-description a::attr(href)").getall()
-        for h in histories[:]:
-            url = urljoin(response.url, h) + "?show=full"
-            print(url)
-            yield scrapy.Request(url, callback=self.parse_oral_history)
-            # interrupt scrape
-            raise scrapy.exceptions.CloseSpider(reason="first loop")
-            # yield scrapy.Request(url, callback=self.save_pdf)
-
-    # def parse_oral_history(self, response):
-    #    page = response.url.split("/")[-2]
-    #    filename = f'quotes-{page}.html'Ÿ
-    #    with open(filename, 'wb') as f:
-    #        f.write(response.body)
-    #    self.log(f'Saved file {filename}')
+        print("----histories---")
+        print(histories)
+        # for h in histories:
+        #     print(h)
+        # url = urljoin(response.url, h) + "?show=full"
+        # print(url)
+        # yield scrapy.Request(url, callback=self.parse_oral_history)
+        # # interrupt scrape
+        # raise scrapy.exceptions.CloseSpider(reason="first loop")
 
     def parse_oral_history(self, response):
         item = {}
+        print("ORAL HISTORY")
+        print(response)
         # id = eCheck.json()[0]["_id"]["$oid"]
         # print(id)
 

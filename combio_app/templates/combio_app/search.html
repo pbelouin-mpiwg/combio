@@ -145,7 +145,7 @@
           </div>
           <a
             v-if="currentResult && currentResult.metadata"
-            class="inline-flex items-center text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded text-sm px-4 py-2"
+            class="text-white self-center shadow-md shadow-inner float-right bg-mpiwg-green hover:bg-mpiwg-light-green hover:text-mpiwg-green focus:ring-4 focus:outline-none focus:mpiwg-green font-medium rounded text-sm px-4 py-2"
             style="margin-top: -4px"
             :href="currentResult.metadata.combio.permalink"
             target="_blank"
@@ -256,7 +256,7 @@
          :disabled="isInFirstPage"
          aria-label="Go to first page"
        >
-         |&lt;
+        <i class="fa-solid fa-backward-step"></i>
        </button>
      </li>
 
@@ -270,7 +270,7 @@
          aria-label="Go to previous page"
          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
        >
-         &lt;
+        <i class="fa-solid fa-chevron-left"></i>
        </button>
      </li>
 
@@ -296,7 +296,7 @@
          aria-label="Go to next page"
          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
        >
-         &gt;
+        <i class="fa-solid fa-chevron-right"></i>
        </button>
      </li>
 
@@ -308,7 +308,7 @@
          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
          aria-label="Go to last page"
        >
-         &gt;|
+         <i class="fa-solid fa-forward-step"></i>
        </button>
      </li>
    </ul>
