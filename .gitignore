@@ -147,3 +147,4 @@ static/*
 # Postgres
 data/
 
+combio/static_src
