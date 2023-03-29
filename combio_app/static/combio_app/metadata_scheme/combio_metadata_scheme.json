@@ -29,9 +29,12 @@
         "transcript": {
           "type": "string",
           "widget": "textarea"
+        },
+        "collection": {
+          "type": "string"
         }
       },
-      "required": ["title"]
+      "required": ["title", "collection", "permalink"]
     },
     "dc": {
       "type": "object",

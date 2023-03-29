@@ -22,17 +22,14 @@ class QueenMarySpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        print(response.css)
         histories = response.css("div.artifact-description a::attr(href)").getall()
 
-        print(histories)
         for h in histories:
             #     print(h)
             url = urljoin(response.url, h) + "?show=full"
-            print(url)
             yield scrapy.Request(url, callback=self.parse_oral_history)
             # interrupt scrape
-            raise scrapy.exceptions.CloseSpider(reason="first loop")
+            # raise scrapy.exceptions.CloseSpider(reason="first loop")
 
     def parse_oral_history(self, response):
         item = {}
@@ -43,6 +40,9 @@ class QueenMarySpider(scrapy.Spider):
         metadata_dc = {}
         metadata_combio = {}
         metadata_dc["contributors"] = []
+        metadata_combio["participants"] = []
+        metadata_combio["collection"] = "Queen Mary"
+        metadata_combio["transcript"] = "temp transcript"
         for index, data in enumerate(response.css("tr.ds-table-row")):
             field = data.css("td.label-cell::text").get().split(".")
             if len(field) == 2:
@@ -52,9 +52,9 @@ class QueenMarySpider(scrapy.Spider):
             val = data.css("td.word-break::text").get()
             # yield {
             if field == "title":
-                item["title"] = val
+                metadata_combio["title"] = val
             elif field == "identifier (uri)":
-                item["permalink"] = val
+                metadata_combio["permalink"] = val
             elif field == "rights":
                 metadata_dc["license"] = val
             else:
@@ -62,14 +62,10 @@ class QueenMarySpider(scrapy.Spider):
                     # print("###########CONTRIBUTORS ARRAY##############")
                     metadata_dc["contributors"].append(val)
                     if index == 0:
-                        metadata_combio["interviewers"] = [val]
+                        metadata_combio["participants"].append({"name": val, "role": "interviewer"})
                     if index == 1:
-                        metadata_combio["interviewees"] = [val]
+                        metadata_combio["participants"].append({"name": val, "role": "interviewee"})
                 else:
-                    # print("-----FIELD-----")
-                    # print(field)
-                    # print("----VAL----")
-                    # print(val)
                     metadata_dc[field] = [val]
 
                 # url=response.urljoin(href),
@@ -78,14 +74,11 @@ class QueenMarySpider(scrapy.Spider):
 
         pdfURL = response.css("meta[content*=pdf]::attr(content)").get()
         metadata_dc["pdf"] = pdfURL.split("/")[-1].split("?")[0]
-        item["metadata"] = {}
-        item["metadata"]["dc"] = metadata_dc
+        item["dc"] = metadata_dc
         metadata_combio[
             "collection"
         ] = "Queen Mary University of London History of Modern Biomedicine Interviews (Digital Collection)"
-        item["metadata"]["combio"] = metadata_combio
+        item["combio"] = metadata_combio
         # item['transcript_text'] = "";
-        metadata_combio = {}
-
         yield item
         # yield scrapy.Request(pdfURL, callback=self.save_pdf, cb_kwargs={'item': item})

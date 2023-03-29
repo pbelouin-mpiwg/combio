@@ -9,6 +9,9 @@ from asgiref.sync import sync_to_async
 from jsonschema import validate
 from pathlib import Path
 import json
+import coloredlogs, logging
+
+coloredlogs.install(level="DEBUG")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,11 +23,11 @@ with open(
 
 sys.path.append("/code/")
 os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
+
 import django
 
 django.setup()
-
-from combio_app.models import Record
+from combio_app.models import Record, Collection
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
@@ -41,16 +44,11 @@ class ComBioScrapersPipeline(object):
 
     @sync_to_async
     def process_item(self, item, spider):
-        try:
-            validate(item, schema=metadata_schema)
-            print("good json")
-        except jsonschema.exceptions.ValidationError as ve:
-            print("bad json" + str(ve))
-            # print(metadata_schema)
-            # print("=======records=========")
-            # print(Record.objects.all())
-            # print("-----item-----")
-            # print(item)
+        validate(instance=item, schema=metadata_schema)
+        r = Record(metadata=item)
+        col, success = Collection.objects.get_or_create(name=item["combio"]["collection"])
+        r.collection = col
+        r.save()
         return item
 
 
