@@ -22,6 +22,9 @@
         "title": {
           "type": "string"
         },
+        "permalink": {
+          "type": "string"
+        },
         "transcript": {
           "type": "string",
           "widget": "textarea"
