@@ -12,8 +12,6 @@ pp = pprint.PrettyPrinter(width=41, compact=True)
 
 
 class Command(BaseCommand):
-    help = "Loads dummy data"
-
     def handle(self, **options):
         purge_records()
         purge_collections()

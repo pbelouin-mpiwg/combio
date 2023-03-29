@@ -29,7 +29,7 @@ class QueenMarySpider(scrapy.Spider):
             url = urljoin(response.url, h) + "?show=full"
             yield scrapy.Request(url, callback=self.parse_oral_history)
             # interrupt scrape
-            raise scrapy.exceptions.CloseSpider(reason="first loop")
+            # raise scrapy.exceptions.CloseSpider(reason="first loop")
 
     def parse_oral_history(self, response):
         item = {}

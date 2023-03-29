@@ -1,0 +1,107 @@
+version: "3.8"
+
+volumes:
+  pg_data:
+  es_data: {}
+services:
+  database:
+    image: library/postgres:14-alpine
+    container_name: combio_db
+    restart: on-failure
+    env_file:
+      - env/database.env
+    expose:
+      - 5432
+    volumes:
+      - ./database/scripts:/docker-entrypoint-initdb.d
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]  # TODO: find a way to dynamically get the username
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: combio_es
+    environment:
+      - discovery.type=single-node
+      - xpack.security.http.ssl.enabled=false
+      - ELASTIC_USERNAME=elastic
+      - ELASTIC_PASSWORD=elastic
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+  web:
+    build: .
+    container_name: combio_web
+    image: combio_web
+    command:
+      - /bin/sh
+      - -c
+      - |
+        python manage.py compilemessages
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py collectstatic --noinput
+        bash runserver.sh
+    volumes:
+      - .:/code
+    expose:
+      - 8081
+      - 6800
+    env_file:
+      - env/app.env
+      - env/database.env
+    environment:
+      - VIRTUAL_HOST=127.0.0.1
+      - VIRTUAL_PORT=8081
+    depends_on:
+      database:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+    links:
+      - database
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    #environment:
+    #   - HTTPS_METHOD=nohttps
+    restart: always
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./static:/static
+      - ./media:/media
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    environment:
+      - DEFAULT_EMAIL=miwinter@mpiwg-berlin.mpg.de
+      - LETSENCRYPT_TEST=false
+      - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/certs:/etc/nginx/certs:rw
+      - ./nginx/html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - nginx-proxy
+    restart: always
