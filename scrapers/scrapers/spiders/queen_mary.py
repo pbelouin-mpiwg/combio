@@ -29,7 +29,7 @@ class QueenMarySpider(scrapy.Spider):
             url = urljoin(response.url, h) + "?show=full"
             yield scrapy.Request(url, callback=self.parse_oral_history)
             # interrupt scrape
-            # raise scrapy.exceptions.CloseSpider(reason="first loop")
+            raise scrapy.exceptions.CloseSpider(reason="first loop")
 
     def parse_oral_history(self, response):
         item = {}
@@ -75,9 +75,7 @@ class QueenMarySpider(scrapy.Spider):
         pdfURL = response.css("meta[content*=pdf]::attr(content)").get()
         metadata_dc["pdf"] = pdfURL.split("/")[-1].split("?")[0]
         item["dc"] = metadata_dc
-        metadata_combio[
-            "collection"
-        ] = "Queen Mary University of London History of Modern Biomedicine Interviews (Digital Collection)"
+        metadata_combio["collection"] = "QMUL History of Modern Biomedicine Interviews (Digital Collection)"
         item["combio"] = metadata_combio
         # item['transcript_text'] = "";
         yield item
