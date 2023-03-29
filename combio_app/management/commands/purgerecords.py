@@ -14,5 +14,4 @@ class Command(BaseCommand):
     def handle(self, **options):
         purge_records()
         purge_collections()
-        load_records()
-        self.stdout.write(self.style.SUCCESS("Successfully loaded records"))
+        self.stdout.write(self.style.SUCCESS("Successfully purged records and collections"))

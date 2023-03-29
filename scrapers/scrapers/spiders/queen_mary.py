@@ -2,7 +2,6 @@ from urllib.parse import urljoin
 import scrapy
 from scrapy.http import Request
 from scrapy import crawler
-from combio_app.models import Record
 
 
 class QueenMarySpider(scrapy.Spider):
@@ -25,20 +24,18 @@ class QueenMarySpider(scrapy.Spider):
     def parse(self, response):
         print(response.css)
         histories = response.css("div.artifact-description a::attr(href)").getall()
-        print("----histories---")
+
         print(histories)
-        # for h in histories:
-        #     print(h)
-        # url = urljoin(response.url, h) + "?show=full"
-        # print(url)
-        # yield scrapy.Request(url, callback=self.parse_oral_history)
-        # # interrupt scrape
-        # raise scrapy.exceptions.CloseSpider(reason="first loop")
+        for h in histories:
+            #     print(h)
+            url = urljoin(response.url, h) + "?show=full"
+            print(url)
+            yield scrapy.Request(url, callback=self.parse_oral_history)
+            # interrupt scrape
+            raise scrapy.exceptions.CloseSpider(reason="first loop")
 
     def parse_oral_history(self, response):
         item = {}
-        print("ORAL HISTORY")
-        print(response)
         # id = eCheck.json()[0]["_id"]["$oid"]
         # print(id)
 
@@ -62,17 +59,17 @@ class QueenMarySpider(scrapy.Spider):
                 metadata_dc["license"] = val
             else:
                 if field == "contributor":
-                    print("###########CONTRIBUTORS ARRAY##############")
+                    # print("###########CONTRIBUTORS ARRAY##############")
                     metadata_dc["contributors"].append(val)
                     if index == 0:
                         metadata_combio["interviewers"] = [val]
                     if index == 1:
                         metadata_combio["interviewees"] = [val]
                 else:
-                    print("-----FIELD-----")
-                    print(field)
-                    print("----VAL----")
-                    print(val)
+                    # print("-----FIELD-----")
+                    # print(field)
+                    # print("----VAL----")
+                    # print(val)
                     metadata_dc[field] = [val]
 
                 # url=response.urljoin(href),

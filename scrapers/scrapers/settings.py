@@ -1,12 +1,12 @@
 import os
 import sys
 
-sys.path.append("/code/")
-os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
-
-import django
-
-django.setup()
+# sys.path.append("/code/")
+# os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
+#
+# import django
+#
+# django.setup()
 
 # Scrapy settings for scrapers project
 #
